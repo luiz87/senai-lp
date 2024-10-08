@@ -4,7 +4,7 @@ const resp2 = document.querySelector("h4")
 
 frm.addEventListener("submit", (e)=>{
     e.preventDefault()
-    const valor = frm.inValor.value
+    const valor = Number(frm.inValor.value)
     let troco = 0
     if(valor < 1){
         resp1.innerText = "Valor insuficiente"
