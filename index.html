@@ -31,8 +31,21 @@
                 "livrojs/cap04/exe4_b.html",
                 "livrojs/cap04/exe4_c.html",
                 "livrojs/cap04/exe4_d.html"];
+            let cap = ""
             for (let i = 0; i < arquivos.length; i++) {
-                document.write(`<li><a href="${arquivos[i]}">${arquivos[i]}</a></li>`)
+                let url = arquivos[i].split("/");
+                if(cap != url[1]){
+                    cap = url[1]
+                    document.write(`<h3>${cap.replace("cap","Capítulo ")}</h3>`)
+                }
+                
+                let nomeArquivo = arquivos[i]
+                    .substring(14)
+                    .replace(".html", "")
+                    .replace("exe", "Exemplo ")
+                    .replace("_", ".")
+                    .replace("resp", "Resposta ")                
+                document.write(`<li><a href="${arquivos[i]}">${nomeArquivo}</a></li>`)
             }
         </script>
 
