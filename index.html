@@ -5,16 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Minha Página</title>
-    <style>
-        a {
-            text-decoration: none;
-        }
-    </style>
+
 </head>
 
 <body>
     <h1>Lista de Exemplos e Exercícios</h1>
     <ul>
+
         <script>
             const arquivos = ["livrojs/cap01/exe1_1.html",
                 "livrojs/cap01/exe1_2.html",
@@ -35,25 +32,24 @@
                 "livrojs/cap04/exe4_3.html",
                 "livrojs/cap04/resp4_b.html",
                 "livrojs/cap04/resp4_c.html",
-                "livrojs/cap04/resp4_d.html"];
+                "livrojs/cap04/resp4_d.html"]
             let cap = ""
             for (let i = 0; i < arquivos.length; i++) {
-                let url = arquivos[i].split("/");
+                let url = arquivos[i].split("/")
                 if(cap != url[1]){
                     cap = url[1]
                     document.write(`<h3>${cap.replace("cap","Capítulo ")}</h3>`)
                 }
-                
-                let nomeArquivo = arquivos[i]
+                let link = arquivos[i]
                     .substring(14)
                     .replace(".html", "")
                     .replace("exe", "Exemplo ")
-                    .replace("_", ".")
-                    .replace("resp", "Resposta ")                
-                document.write(`<li><a href="${arquivos[i]}">${nomeArquivo}</a></li>`)
+                    .replace("resp","Resposta ")
+                    .replace("_",".")
+                document.write(`<li><a href="${arquivos[i]}">${link}</a></li>`);
             }
-        </script>
 
+        </script>
     </ul>
 </body>
 
