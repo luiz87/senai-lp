@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Loop For</h1>
+    <script>
+        // 1º define a variavel de contagem 
+        // 2º define a condição do laço
+        // 3º define a forma de incremento
+        for (let i = 10; i <= 100; i = i + 10) {
+            document.write(i + ", ")
+        }
+        document.write("<br>")
+        for (let i = 20; i > 0; i = i - 2) {
+            document.write(i + ", ")
+        }
+    </script>
+    <h1>while</h1>
+    <script>
+        let senha = ""
+        let tentativa = 0
+        while (senha != "senai") {
+            senha = prompt("Digite a senha")
+            document.write("Tentativa!<br>")
+            tentativa++
+        }
+        document.write("Finalmente acertou a senha depois de " + tentativa)
+    </script>
+    <h1>do..while</h1>
+    <script>
+        do {
+            senha = prompt("Digite a senha")
+        } while (senha != "senai")
+    </script>
+</body>
+
+</html>
