@@ -61,3 +61,11 @@ id_jogador int,
 constraint PK_Evento primary key(id_evento),
 constraint FK_EventoPartida foreign key(id_partida) references partida(id_partida),
 constraint FK_EventoJogador foreign key(id_jogador) references jogador(id_jogador));
+
+desc estadio;
+desc time   ;
+desc jogador;
+desc partida;
+desc evento ;
+
+alter table evento modify id_evento int auto_increment;
