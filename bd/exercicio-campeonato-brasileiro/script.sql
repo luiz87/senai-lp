@@ -1,20 +1,71 @@
-('Maracanã','Av. Pres. Castelo Branco, Portão 3 - Maracanã, Rio de Janeiro - RJ','78838'),
-('Morumbi (Estádio Cícero Pompeu de Toledo)','Praça Roberto Gomes Pedrosa, 1 - Morumbi, São Paulo - SP','66795'),
-('Mineirão (Estádio Governador Magalhães Pinto)','Av. Antônio Abrahão Caram, 1001 - Pampulha, Belo Horizonte - MG','61846'),
-('Arena do Grêmio','Av. Padre Leopoldo Brentano, 110 - Humaitá, Porto Alegre - RS','55662'),
-('Allianz Parque','Av. Francisco Matarazzo, 1705 - Água Branca, São Paulo - SP','43713'),
-('Beira-Rio (Estádio José Pinheiro Borda)','Av. Padre Cacique, 891 - Praia de Belas, Porto Alegre - RS','50128'),
-('Arena Fonte Nova','Ladeira da Fonte das Pedras - Nazaré, Salvador - BA','47907'),
-('Arena Castelão (Estádio Governador Plácido Castelo)','Av. Alberto Craveiro, 2901 - Castelão, Fortaleza - CE','63903'),
-('Neo Química Arena','Av. Miguel Ignácio Curi, 111 - Artur Alvim, São Paulo - SP','49205'),
-('Estádio Nilton Santos (Engenhão)','R. José dos Reis, 425 - Engenho de Dentro, Rio de Janeiro - RJ','46831'),
-('Arena da Baixada (Estádio Joaquim Américo)','R. Buenos Aires, 1260 - Água Verde, Curitiba - PR','42372'),
-('Arena Pantanal','Av. Agrícola Paes de Barros - Verdão, Cuiabá - MT','44000'),
-('Estádio Serra Dourada','Av. Fued José Sebba - Jardim Goiás, Goiânia - GO','50049'),
-('Arena Pernambuco','Av. Deus é Fiel, 1 - São Lourenço da Mata, Recife - PE','44300'),
-('Estádio Couto Pereira','R. Ubaldino do Amaral, 37 - Alto da Glória, Curitiba - PR','40502'),
-('Vila Belmiro (Estádio Urbano Caldeira)','R. Princesa Isabel, 77 - Vila Belmiro, Santos - SP','16068'),
-('Estádio São Januário','R. Gen. Almério de Moura, 131 - Vasco da Gama, Rio de Janeiro - RJ','21880'),
-('Estádio Independência (Arena Independência)','R. Pitangui, 3230 - Horto, Belo Horizonte - MG','23018'),
-('Arena da Amazônia','Av. Constantino Nery, 5001 - Flores, Manaus - AM','44310'),
-('Estádio Mané Garrincha','SRPN - Asa Norte, Brasília - DF','72788'),
+show databases; -- visualizar as databases
+
+create database campeonatobrasileiro; -- criar base de dados
+
+status; -- visualiza principais configurações
+
+use campeonatobrasileiro; -- entra em uma base de dados 
+
+-- cria uma nova tabela
+create table estadio(
+id_estadio int primary key auto_increment,
+nome varchar(150) not null,
+endereco varchar(150),
+capacidade int);
+
+show tables; -- mostra as tabelas de uma base de dados
+
+desc estadio; -- descreve a estrutura de uma tabela
+
+create table time(
+id_time int,
+nome_completo varchar(150),
+nome varchar(150),
+sigla varchar(3),
+cidade varchar(150),
+estado varchar(150),
+id_estadio int not null,
+constraint PK_Time primary key(id_time),
+constraint FK_EstadioTime foreign key(id_estadio) references estadio(id_estadio));
+
+create table jogador(
+id_jogador int,
+nome varchar(150),
+numero int,
+dt_nascimento date,
+posicao varchar(150),
+id_time int,
+constraint PK_Jogador primary key(id_jogador),
+constraint FK_JogadorTime foreign key(id_time) references time(id_time));
+
+create table partida(
+id_partida int,
+rodada int,
+horario datetime,
+gol_mandante int,
+gol_visitante int,
+id_mandante int,
+id_visitante int,
+id_estadio int,
+constraint PK_Partida primary key(id_partida),
+constraint FK_TimeMandante foreign key(id_mandante) references time(id_time),
+constraint FK_TimeVisitante foreign key(id_visitante) references time(id_time),
+constraint FK_PartidaEstadio foreign key(id_estadio) references estadio(id_estadio));
+
+create table evento(
+id_evento int,
+minuto int,
+descricao varchar(150),
+id_partida int,
+id_jogador int,
+constraint PK_Evento primary key(id_evento),
+constraint FK_EventoPartida foreign key(id_partida) references partida(id_partida),
+constraint FK_EventoJogador foreign key(id_jogador) references jogador(id_jogador));
+
+desc estadio;
+desc time   ;
+desc jogador;
+desc partida;
+desc evento ;
+
+alter table evento modify id_evento int auto_increment;
