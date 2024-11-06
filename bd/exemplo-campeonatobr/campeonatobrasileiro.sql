@@ -160,3 +160,28 @@ update time set id_estadio = 20 where id_time = 17;
 update time set id_estadio = 16 where id_time = 18;
 update time set id_estadio = 2  where id_time = 19;
 update time set id_estadio = 17 where id_time = 20;
+
+-- Identificar e realizar o update dos 3 times que não estão na serie A atualmente.
+-- Necessário fazer o update dos times..
+/*
+(serie B)América-MG	-> Atlético-GO (serie A)
+(serie B)Coritiba	-> Criciúma    (serie A)
+(serie B)Goiás	    -> Juventude   (serie A)
+(serie B)Santos	    -> Vitória     (serie A)
+
+Atlético Clube Goianiense	Atlético-GO	ACG	Goiânia	        GO	Estádio Antônio Accioly
+Criciúma Esporte Clube	    Criciúma	CRI	Criciúma	    SC	Estádio Heriberto Hülse
+Esporte Clube Juventude	    Juventude	JUV	Caxias do Sul	RS	Estádio Alfredo Jaconi
+Esporte Clube Vitória	    Vitória 	VIT	Salvador	    BA	Estádio Manoel Barradas (Barradão)
+
+*/
+
+update time set 
+    nome_completo = 'Atlético Clube Goianiense',
+    nome = 'Atlético-GO',
+    sigla = 'ACG',
+    cidade = 'Goiânia',
+    estado = 'GO',
+    id_estadio = 13
+where id_time = 1;
+
