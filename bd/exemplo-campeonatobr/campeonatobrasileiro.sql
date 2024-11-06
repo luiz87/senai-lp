@@ -139,3 +139,24 @@ insert into time(nome_completo,nome,sigla,cidade,estado,id_estadio) values
 ('Club de Regatas Vasco da Gama','Vasco','VAS','Rio de Janeiro','RJ',1);
 
 select * from time;
+
+update time set id_estadio = 18 where id_time = 1;
+update time set id_estadio = 11 where id_time = 2;
+update time set id_estadio = 3  where id_time = 3;
+update time set id_estadio = 13 where id_time = 4;
+update time set id_estadio = 7  where id_time = 5;
+update time set id_estadio = 10 where id_time = 6;
+update time set id_estadio = 9  where id_time = 7;
+update time set id_estadio = 3  where id_time = 8;
+update time set id_estadio = 12 where id_time = 9;
+update time set id_estadio = 1  where id_time = 10;
+update time set id_estadio = 1  where id_time = 11;
+update time set id_estadio = 8  where id_time = 12;
+update time set id_estadio = 13 where id_time = 13;
+update time set id_estadio = 4  where id_time = 14;
+update time set id_estadio = 6  where id_time = 15;
+update time set id_estadio = 5  where id_time = 16;
+update time set id_estadio = 20 where id_time = 17;
+update time set id_estadio = 16 where id_time = 18;
+update time set id_estadio = 2  where id_time = 19;
+update time set id_estadio = 17 where id_time = 20;
