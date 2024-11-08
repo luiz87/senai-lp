@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script src="lista-jogos.js"></script>
+    <script>
+
+        times = { 'ACG': 1, 'CAP': 2, 'CAM': 3, 'BAH': 4, 'BOT': 5, 'COR': 6, 'CRI': 7, 'CRU': 8, 'CUI': 9, 'FLA': 10, 'FLU': 11, 'FOR': 12, 'JUV': 13, 'GRE': 14, 'INT': 15, 'PAL': 16, 'RBB': 17, 'VIT': 18, 'SAO': 19, 'VAS': 20 }
+        estadios = { 'ACG': 21, 'CAP': 11, 'CAM': 3, 'BAH': 7, 'BOT': 10, 'COR': 9, 'CRI': 22, 'CRU': 3, 'CUI': 12, 'FLA': 1, 'FLU': 1, 'FOR': 8, 'JUV': 23, 'GRE': 4, 'INT': 6, 'PAL': 5, 'RBB': 2, 'VIT': 24, 'SAO': 2, 'VAS': 17 };
+
+        for (const t in lsItem) {
+            for (let i = 0; i < 10; i++) {
+                dataJogo = lsItem[t][i]['data_realizacao']
+                gol_mandante = lsItem[t][i]['placar_oficial_mandante']
+                gol_visitante = lsItem[t][i]['placar_oficial_visitante']
+                mandante = times[lsItem[t][i]['equipes']['mandante']['sigla']]
+                visitante = times[lsItem[t][i]['equipes']['visitante']['sigla']]
+                estadio = estadios[lsItem[t][i]['equipes']['mandante']['sigla']]
+                document.write(`(${Number(t) + 1},'${dataJogo}',${gol_mandante},${gol_visitante},${mandante},${visitante},${estadio}),<br>`)
+            }
+
+        }
+
+    </script>
+</body>
+
+</html>
