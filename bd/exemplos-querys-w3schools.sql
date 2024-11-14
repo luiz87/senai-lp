@@ -1,3 +1,5 @@
+-- link da base w3schools
+-- https://github.com/AndrejWeb/w3schools-database/blob/master/w3schools.sql
 use w3schools;
 
 /*
@@ -97,15 +99,30 @@ Teremos que usar os operadores IS NULLand IS NOT NULLem vez disso.
 UPDATE Customers SET Address = NULL WHERE CustomerID = 3 OR CustomerID = 5;
 SELECT * FROM Customers WHERE Address IS NULL;
 
-
 /*
 O operador SQL IN
-O INoperador permite que você especifique vários valores em uma WHEREcláusula.
-O INoperador é uma abreviação para múltiplas ORcondições.
+O IN operador permite que você especifique vários valores em uma WHERE cláusula.
+O IN operador é uma abreviação para múltiplas OR condições.
 */
+-- Retornar todos os clientes da 'Alemanha', 'França' ou 'Reino Unido'
+SELECT * FROM Customers WHERE Country IN ('Germany', 'France', 'UK');
 
-SELECT * FROM Customers
-WHERE Country IN ('Germany', 'France', 'UK');
+-- Retornar todos os clientes que NÃO são da 'Alemanha', 'França' ou 'Reino Unido':
+SELECT * FROM Customers WHERE Country NOT IN ('Germany', 'France', 'UK');
+
+/*
+IN (SELECT)
+Você também pode usar INcom uma subconsulta na WHERE cláusula.
+Com uma subconsulta, você pode retornar todos os registros da consulta principal que estão presentes no resultado da subconsulta.
+*/
+-- Total de cliente 91
+SELECT count(*) FROM Customers;
+-- Retorna o ID de todos os clientes que fizeram algum pedido
+SELECT DISTINCT CustomerID FROM Orders;
+-- Retorna todos os clientes que têm um pedido na tabela Pedidos : Total 74
+SELECT count(*) FROM Customers WHERE CustomerID IN (SELECT DISTINCT CustomerID FROM Orders);
+-- Retorna todos os clientes que NÃO fizeram nenhum pedido na tabela Pedidos : Total 17
+SELECT count(*) FROM Customers WHERE CustomerID NOT IN (SELECT DISTINCT CustomerID FROM Orders);
 
 /*
 Função MySQL SUBSTR()
@@ -123,7 +140,8 @@ SELECT SUBSTR("SQL Tutorial", -5, 5) AS ExtractString;
 /*
 A cláusula SQL SELECT LIMIT 
 A SELECT LIMIT cláusula é usada para especificar o número de registros a serem retornados.
-A SELECT LIMIT cláusula é útil em tabelas grandes com milhares de registros. Retornar um grande número de registros pode impactar o desempenho.
+A SELECT LIMIT cláusula é útil em tabelas grandes com milhares de registros. 
+Retornar um grande número de registros pode impactar o desempenho.
 */
 
 SELECT * FROM Customers LIMIT 5;
@@ -142,3 +160,128 @@ Funções de agregação ignoram valores nulos (exceto para COUNT()).
 */
 
 SELECT MIN(Price), MAX(Price), COUNT(*), SUM(Price), AVG(Price) FROM Products;
+
+/*
+O operador SQL LIKE
+O LIKE operador é usado em uma WHERE cláusula para procurar um padrão especificado em uma coluna.
+Existem dois curingas frequentemente usados ​​em conjunto com o LIKE operador:
+O sinal de porcentagem % representa zero, um ou vários caracteres
+O sinal de sublinhado _ representa um único caractere
+*/
+
+/*
+O _ curinga
+O _ curinga representa um único caractere.
+Pode ser qualquer caractere ou número, mas cada um _ representa um, e somente um, caractere.
+*/
+-- Retorna todos os clientes de uma cidade que começa com 'L' seguido por um caractere curinga, depois 'nd' e depois dois caracteres curinga:
+SELECT * FROM Customers WHERE city LIKE 'L_nd__';
+
+/*
+O % curinga
+O % curinga representa qualquer número de caracteres, até mesmo zero caracteres.
+*/
+-- Retorna todos os clientes de uma cidade que contém a letra 'L':
+SELECT * FROM Customers WHERE city LIKE '%L%';
+
+-- Selecione todos os clientes que começam com a letra "a":
+SELECT * FROM Customers WHERE CustomerName LIKE 'a%';
+
+-- Retorna todos os clientes que terminam com 'a':
+SELECT * FROM Customers WHERE CustomerName LIKE '%a';
+
+-- Retorna todos os clientes que começam com "b" e terminam com "s":
+SELECT * FROM Customers WHERE CustomerName LIKE 'b%s';
+
+-- Retorna todos os clientes que começam com "a" e têm pelo menos 3 caracteres de comprimento:
+SELECT * FROM Customers WHERE CustomerName LIKE 'a__%';
+
+-- Se nenhum curinga for especificado, a frase precisará ter uma correspondência exata para retornar um resultado.
+-- Retornar todos os clientes da Espanha:
+SELECT * FROM Customers WHERE Country LIKE 'Spain';
+
+/*
+O operador SQL BETWEEN
+O BETWEEN operador seleciona valores dentro de um intervalo dado. Os valores podem ser números, texto ou datas.
+O BETWEEN operador é inclusivo: os valores inicial e final são incluídos. 
+*/
+-- Seleciona todos os produtos com preço entre 10 e 20:
+SELECT * FROM Products WHERE Price BETWEEN 10 AND 20;
+-- Se não existice o BETWEEN 
+SELECT * FROM Products WHERE Price >= 10 AND Price <= 20;
+
+-- Para exibir os produtos fora do intervalo do exemplo anterior, use NOT BETWEEN:
+SELECT * FROM Products WHERE Price NOT BETWEEN 10 AND 20;
+
+-- A seguinte instrução SQL seleciona todos os produtos com um preço entre 10 e 20. 
+-- Além disso, o CategoryID deve ser 1, 2 ou 3:
+SELECT * FROM Products WHERE Price BETWEEN 10 AND 20 AND CategoryID IN (1,2,3);
+
+-- A seguinte instrução SQL seleciona todos os produtos com um ProductName em ordem alfabética 
+-- entre Carnarvon Tigers e Mozzarella di Giovanni:
+SELECT * FROM Products
+WHERE ProductName BETWEEN 'Carnarvon Tigers' AND 'Mozzarella di Giovanni'
+ORDER BY ProductName;
+
+-- A seguinte instrução SQL seleciona todos os produtos com um ProductName que não esteja 
+-- entre Carnarvon Tigers e Mozzarella di Giovanni:
+SELECT * FROM Products
+WHERE ProductName NOT BETWEEN 'Carnarvon Tigers' AND 'Mozzarella di Giovanni'
+ORDER BY ProductName;
+
+-- A seguinte instrução SQL seleciona todos os pedidos com uma OrderDate entre '01-julho-1996' e '31-julho-1996':
+SELECT * FROM Orders WHERE OrderDate BETWEEN '1996-07-01' AND '1996-07-31';
+
+/*
+Alias ​​SQL
+Aliases SQL são usados ​​para dar a uma tabela, ou a uma coluna em uma tabela, um nome temporário.
+Aliases são frequentemente usados ​​para tornar os nomes das colunas mais legíveis.
+Um alias só existe enquanto durar essa consulta.
+Um alias é criado com a ASpalavra-chave.
+*/
+
+SELECT CustomerID AS ID FROM Customers;
+
+-- Na verdade, na maioria das linguagens de banco de dados, você pode pular a palavra-chave AS e obter o mesmo resultado:
+SELECT CustomerID ID FROM Customers;
+
+/*
+Sintaxe
+Quando alias é usado na coluna:
+SELECT column_name AS alias_name FROM table_name;
+Quando alias é usado na tabela:
+SELECT column_name(s) FROM table_name AS alias_name;
+*/
+
+-- Usando "aspas duplas" para aliases com caracteres de espaço:
+SELECT ProductName AS "My Great Products" FROM Products;
+
+-- A seguinte instrução SQL cria um alias chamado "Endereço" que combina quatro colunas (Endereço, Código Postal, Cidade e País):
+SELECT CustomerName, CONCAT(Address,', ',PostalCode,', ',City,', ',Country) AS Address FROM Customers;
+
+/*
+Pode parecer inútil usar aliases em tabelas, mas quando você usa mais de uma tabela em suas consultas, 
+isso pode tornar as instruções SQL mais curtas.
+A seguinte declaração SQL seleciona todos os pedidos do cliente com CustomerID=4 (Around the Horn). 
+Usamos as tabelas "Customers" e "Orders" e damos a elas os aliases de tabela "c" e "o" respectivamente 
+(Aqui usamos aliases para tornar o SQL mais curto):
+*/
+
+SELECT o.OrderID, o.OrderDate, c.CustomerName
+FROM Customers AS c, Orders AS o
+WHERE c.CustomerName='Around the Horn' AND c.CustomerID=o.CustomerID;
+
+
+/*
+JOIN SQL
+Uma JOIN cláusula é usada para combinar linhas de duas ou mais tabelas, 
+com base em uma coluna relacionada entre elas.
+Observe que a coluna "CustomerID" na tabela "Orders" se refere ao "CustomerID" na tabela "Customers". 
+O relacionamento entre as duas tabelas acima é a coluna "CustomerID".
+Então, podemos criar a seguinte instrução SQL (que contém um INNER JOIN), 
+que seleciona registros que tenham valores correspondentes em ambas as tabelas:
+*/
+
+SELECT o.OrderID, c.CustomerName, o.OrderDate
+FROM Orders AS o
+INNER JOIN Customers AS c ON o.CustomerID = c.CustomerID;
