@@ -6,14 +6,12 @@ use w3schools;
 A instrução SQL SELECT
 A SELECTinstrução é usada para selecionar dados de um banco de dados.
 */
-
 SELECT CustomerName, City FROM Customers;
 
 /*
 A instrução SQL SELECT DISTINCT
 A SELECT DISTINCTinstrução é usada para retornar apenas valores distintos (diferentes).
 */
-
 SELECT DISTINCT Country FROM Customers;
 
 /*
@@ -21,14 +19,12 @@ A cláusula SQL WHERE
 A WHERE cláusula é usada para filtrar registros.
 Ele é usado para extrair apenas os registros que atendem a uma condição especificada.
 */
-
 SELECT * FROM Customers WHERE Country='Mexico';
 
 /*
 A ORDEM SQL POR
-A ORDER BY palavra-chave é usada para classificar o conjunto de resultados em ordem crescente ou decrescente.
+A palavra-chave ORDER BY é usada para classificar o conjunto de resultados em ordem crescente ou decrescente.
 */
-
 SELECT * FROM Products ORDER BY Price;
 SELECT * FROM Products ORDER BY Price DESC;
 SELECT * FROM Products ORDER BY Price, ProductID;
@@ -36,52 +32,47 @@ SELECT * FROM Customers ORDER BY Country ASC, City ASC, CustomerName DESC;
 
 /*
 O operador SQL AND
-A WHERE cláusula pode conter um ou muitos AND operadores.
-O AND operador é usado para filtrar registros com base em mais de uma condição, 
-como se você quisesse retornar todos os clientes da Espanha que começam com a letra 'G':
+A cláusula WHERE pode conter um ou muitos operadores AND.
+O operador AND é usado para filtrar registros com base em mais de uma condição, 
 */
-
 -- Exemplo: Selecione todos os clientes da Espanha que começam com a letra 'G':
 SELECT * FROM Customers WHERE Country = 'Spain' AND CustomerName LIKE 'G%';
 
 /*
-E vs OU
-O ANDoperador exibe um registro se todas as condições forem VERDADEIRAS.
-O ORoperador exibe um registro se qualquer uma das condições for VERDADEIRA.
+Operadores AND vs OR
+O operador AND exibe um registro se todas as condições forem VERDADEIRAS.
+O operador OR exibe um registro se qualquer uma das condições for VERDADEIRA.
 */
 
 /*
-Todas as condições devem ser verdadeiras
+(AND) Todas as condições devem ser verdadeiras
 A seguinte instrução SQL seleciona todos os campos Customersonde 
-Country"Alemanha" E City"Berlim" E PostalCodeé maior que 12000:
+Country "Alemanha" E City "Berlim" E PostalCode é maior que 12000:
 */
 SELECT * FROM Customers WHERE Country = 'Germany' AND City = 'Berlin' AND PostalCode > 12000;
 
 /*
 Combinando AND e OR
-Você pode combinar os operadores AND e .OR
+Você pode combinar os operadores AND e OR
 A seguinte instrução SQL seleciona todos os clientes da Espanha que começam com "G" ou "R".
 Certifique-se de usar parênteses para obter o resultado correto.
 */
-
 SELECT * FROM Customers WHERE Country = 'Spain' AND (CustomerName LIKE 'G%' OR CustomerName LIKE 'R%');
 
 /*
 O operador SQL OR
-A WHERE cláusula pode conter um ou mais OR operadores.
-O OR operador é usado para filtrar registros com base em mais de uma condição, 
+A cláusula WHERE pode conter um ou mais operadores OR.
+O operador OR é usado para filtrar registros com base em mais de uma condição, 
 se você quisesse retornar todos os clientes da Alemanha, mas também aqueles da Espanha:
 */
-
 SELECT * FROM Customers WHERE Country = 'Germany' OR Country = 'Spain';
 
 /*
-O operador NOT
-O NOT operador é usado em combinação com outros operadores para fornecer o resultado oposto, 
+Operador NOT
+O operador NOT é usado em combinação com outros operadores para fornecer o resultado oposto, 
 também chamado de resultado negativo.
-Na instrução select abaixo, queremos retornar todos os clientes que NÃO são da Espanha:
 */
-
+-- Na instrução select abaixo, queremos retornar todos os clientes que NÃO são da Espanha:
 SELECT * FROM Customers WHERE NOT Country = 'Spain';
 
 -- Selecione clientes que não começam com a letra 'A':
@@ -90,19 +81,23 @@ SELECT * FROM Customers WHERE CustomerName NOT LIKE 'A%' ORDER BY CustomerName;
 /*
 O que é um valor NULL?
 Um campo com valor NULL é um campo sem valor.
-Se um campo em uma tabela for opcional, é possível inserir um novo registro ou atualizar um registro sem adicionar um valor a esse campo. Então, o campo será salvo com um valor NULL.
-Nota: Um valor NULL é diferente de um valor zero ou de um campo que contém espaços. Um campo com um valor NULL é aquele que foi deixado em branco durante a criação do registro!
+Se um campo em uma tabela for opcional, é possível inserir um novo registro ou atualizar um registro sem adicionar um valor a esse campo. 
+Então, o campo será salvo com um valor NULL.
+Nota: Um valor NULL é diferente de um valor zero ou de um campo que contém espaços. 
+Um campo com um valor NULL é aquele que foi deixado em branco durante a criação do registro!
 Como testar valores NULL?
 Não é possível testar valores NULL com operadores de comparação, como =, < ou <>.
 Teremos que usar os operadores IS NULLand IS NOT NULLem vez disso.
 */
+-- Deixar alguns registros com o endereço NULL
 UPDATE Customers SET Address = NULL WHERE CustomerID = 3 OR CustomerID = 5;
+-- Selecionar espeficicamente os registro que não tem preenchimento no endereço
 SELECT * FROM Customers WHERE Address IS NULL;
 
 /*
-O operador SQL IN
-O IN operador permite que você especifique vários valores em uma WHERE cláusula.
-O IN operador é uma abreviação para múltiplas OR condições.
+Operador SQL IN
+O operador IN permite que você especifique vários valores em uma cláusula WHERE.
+O operador IN é uma abreviação para múltiplas condições OR.
 */
 -- Retornar todos os clientes da 'Alemanha', 'França' ou 'Reino Unido'
 SELECT * FROM Customers WHERE Country IN ('Germany', 'France', 'UK');
@@ -112,10 +107,11 @@ SELECT * FROM Customers WHERE Country NOT IN ('Germany', 'France', 'UK');
 
 /*
 IN (SELECT)
-Você também pode usar INcom uma subconsulta na WHERE cláusula.
+Você também pode usar IN com uma subconsulta na cláusula WHERE.
 Com uma subconsulta, você pode retornar todos os registros da consulta principal que estão presentes no resultado da subconsulta.
+Nota: subconsulta é um select dentro de outro select isolado por ()
 */
--- Total de cliente 91
+-- Seleciona todos os clientes : Total 91
 SELECT count(*) FROM Customers;
 -- Retorna o ID de todos os clientes que fizeram algum pedido
 SELECT DISTINCT CustomerID FROM Orders;
@@ -126,30 +122,26 @@ SELECT count(*) FROM Customers WHERE CustomerID NOT IN (SELECT DISTINCT Customer
 
 /*
 Função MySQL SUBSTR()
-Extraia uma substring de uma string (comece na posição 5, extraia 3 caracteres)
 */
+-- Extraia uma substring de uma string (comece na posição 5, extraia 3 caracteres)
+SELECT SUBSTR("SQL Tutorial", 5, 3) AS ExtractString; -- Retorno: Tut
 
-SELECT SUBSTR("SQL Tutorial", 5, 3) AS ExtractString;
-
-/*
-Extraia uma substring de uma string (comece do final, na posição -5, extraia 5 caracteres):
-*/
-
-SELECT SUBSTR("SQL Tutorial", -5, 5) AS ExtractString;
+-- Extraia uma substring de uma string (comece do final, na posição -5, extraia 5 caracteres):
+SELECT SUBSTR("SQL Tutorial", -5, 5) AS ExtractString; -- Retorno: orial
 
 /*
 A cláusula SQL SELECT LIMIT 
-A SELECT LIMIT cláusula é usada para especificar o número de registros a serem retornados.
-A SELECT LIMIT cláusula é útil em tabelas grandes com milhares de registros. 
+A cláusula SELECT LIMIT é usada para especificar o número de registros a serem retornados.
+A cláusula SELECT LIMIT é útil em tabelas grandes com milhares de registros. 
 Retornar um grande número de registros pode impactar o desempenho.
 */
-
 SELECT * FROM Customers LIMIT 5;
 
 /*
 Funções de agregação SQL
 Uma função agregada é uma função que executa um cálculo em um conjunto de valores e retorna um único valor.
-Funções agregadas são frequentemente usadas com a GROUP BYcláusula da SELECT instrução. A GROUP BYcláusula divide o conjunto de resultados em grupos de valores e a função agregada pode ser usada para retornar um único valor para cada grupo.
+Funções agregadas são frequentemente usadas com a cláusula GROUP BY da instrução SELECT. 
+A cláusula GROUP BY divide o conjunto de resultados em grupos de valores e a função agregada pode ser usada para retornar um único valor para cada grupo.
 As funções de agregação SQL mais comumente usadas são:
 MIN()- retorna o menor valor dentro da coluna selecionada
 MAX()- retorna o maior valor dentro da coluna selecionada
@@ -158,28 +150,27 @@ SUM()- retorna a soma total de uma coluna numérica
 AVG()- retorna o valor médio de uma coluna numérica
 Funções de agregação ignoram valores nulos (exceto para COUNT()).
 */
-
 SELECT MIN(Price), MAX(Price), COUNT(*), SUM(Price), AVG(Price) FROM Products;
 
 /*
-O operador SQL LIKE
-O LIKE operador é usado em uma WHERE cláusula para procurar um padrão especificado em uma coluna.
-Existem dois curingas frequentemente usados ​​em conjunto com o LIKE operador:
+Operador LIKE
+O operador LIKE é usado em uma cláusula WHERE para procurar um padrão especificado em uma coluna.
+Existem dois curingas frequentemente usados ​​em conjunto com o operador LIKE:
 O sinal de porcentagem % representa zero, um ou vários caracteres
 O sinal de sublinhado _ representa um único caractere
 */
 
 /*
-O _ curinga
-O _ curinga representa um único caractere.
+Curinga _
+O curinga _ representa um único caractere.
 Pode ser qualquer caractere ou número, mas cada um _ representa um, e somente um, caractere.
 */
 -- Retorna todos os clientes de uma cidade que começa com 'L' seguido por um caractere curinga, depois 'nd' e depois dois caracteres curinga:
 SELECT * FROM Customers WHERE city LIKE 'L_nd__';
 
 /*
-O % curinga
-O % curinga representa qualquer número de caracteres, até mesmo zero caracteres.
+Curinga %
+O curinga % representa qualquer número de caracteres, até mesmo zero caracteres.
 */
 -- Retorna todos os clientes de uma cidade que contém a letra 'L':
 SELECT * FROM Customers WHERE city LIKE '%L%';
@@ -201,9 +192,9 @@ SELECT * FROM Customers WHERE CustomerName LIKE 'a__%';
 SELECT * FROM Customers WHERE Country LIKE 'Spain';
 
 /*
-O operador SQL BETWEEN
-O BETWEEN operador seleciona valores dentro de um intervalo dado. Os valores podem ser números, texto ou datas.
-O BETWEEN operador é inclusivo: os valores inicial e final são incluídos. 
+Operador BETWEEN
+O operador BETWEEN seleciona valores dentro de um intervalo dado. Os valores podem ser números, texto ou datas.
+O operador BETWEEN é inclusivo: o valor inicial e final são incluídos. 
 */
 -- Seleciona todos os produtos com preço entre 10 e 20:
 SELECT * FROM Products WHERE Price BETWEEN 10 AND 20;
@@ -233,13 +224,12 @@ ORDER BY ProductName;
 SELECT * FROM Orders WHERE OrderDate BETWEEN '1996-07-01' AND '1996-07-31';
 
 /*
-Alias ​​SQL
+Alias ​​(AS)
 Aliases SQL são usados ​​para dar a uma tabela, ou a uma coluna em uma tabela, um nome temporário.
 Aliases são frequentemente usados ​​para tornar os nomes das colunas mais legíveis.
 Um alias só existe enquanto durar essa consulta.
-Um alias é criado com a ASpalavra-chave.
+Um alias é criado com a palavra-chave (AS).
 */
-
 SELECT CustomerID AS ID FROM Customers;
 
 -- Na verdade, na maioria das linguagens de banco de dados, você pode pular a palavra-chave AS e obter o mesmo resultado:
@@ -253,7 +243,7 @@ Quando alias é usado na tabela:
 SELECT column_name(s) FROM table_name AS alias_name;
 */
 
--- Usando "aspas duplas" para aliases com caracteres de espaço:
+-- Usando "aspas duplas" para alias com caracteres de espaço:
 SELECT ProductName AS "My Great Products" FROM Products;
 
 -- A seguinte instrução SQL cria um alias chamado "Endereço" que combina quatro colunas (Endereço, Código Postal, Cidade e País):
