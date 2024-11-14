@@ -1,7 +1,8 @@
 /*
 https://www.hackerrank.com/challenges/african-cities/problem?isFullScreen=true
-Given the CITY and COUNTRY tables, query the names of all cities where the CONTINENT is 'Africa'.
-Note: CITY.CountryCode and COUNTRY.Code are matching key columns.
+Dadas as tabelas CITY e COUNTRY, consulte os nomes de todas as cidades onde o CONTINENT é 'África'.
+Nota: CITY.CountryCode e COUNTRY.Code são colunas-chave correspondentes.
+
 */
 
 SELECT CT.NAME FROM CITY AS CT 
@@ -10,8 +11,8 @@ WHERE CONTINENT = 'Africa';
 
 /*
 https://www.hackerrank.com/challenges/asian-population/problem?isFullScreen=true
-Given the CITY and COUNTRY tables, query the sum of the populations of all cities where the CONTINENT is 'Asia'.
-Note: CITY.CountryCode and COUNTRY.Code are matching key columns.
+Dadas as tabelas CITY e COUNTRY, consulte a soma das populações de todas as cidades onde o CONTINENTE é 'Ásia'.
+Nota: CITY.CountryCode e COUNTRY.Code são colunas-chave correspondentes.
 */
 
 SELECT SUM(CT.POPULATION) FROM CITY AS CT 
@@ -20,7 +21,9 @@ WHERE CONTINENT = 'Asia';
 
 /*
 https://www.hackerrank.com/challenges/average-population-of-each-continent/problem?isFullScreen=true
-Given the CITY and COUNTRY tables, query the names of all the continents (COUNTRY.Continent) and their respective average city populations (CITY.Population) rounded down to the nearest integer.
+Dadas as tabelas CITY e COUNTRY, consulte os nomes de todos os continentes (COUNTRY.Continent) e suas 
+respectivas populações médias de cidades (CITY.Population) arredondados para o número inteiro mais próximo.
+Nota: Utilize a função TRUNCATE para o arredondamento.
 */
 
 SELECT CONTINENT, TRUNCATE(AVG(CT.POPULATION),0) FROM CITY AS CT 
