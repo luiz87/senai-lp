@@ -285,3 +285,44 @@ que seleciona registros que tenham valores correspondentes em ambas as tabelas:
 SELECT o.OrderID, c.CustomerName, o.OrderDate
 FROM Orders AS o
 INNER JOIN Customers AS c ON o.CustomerID = c.CustomerID;
+
+/*
+Diferentes tipos de SQL JOINs
+Aqui estão os diferentes tipos de JOINs em SQL:
+(INNER) JOIN: Retorna registros que possuem valores correspondentes em ambas as tabelas
+(LEFT)  JOIN: Retorna todos os registros da tabela da esquerda e os registros correspondentes da tabela da direita
+(RIGHT) JOIN: Retorna todos os registros da tabela da direita e os registros correspondentes da tabela da esquerda
+(FULL)  JOIN: Retorna todos os registros quando há uma correspondência na tabela esquerda ou direita
+*/
+
+-- Junte produtos e categorias com a palavra-chave INNER JOIN:
+SELECT ProductID, ProductName, CategoryName FROM Products
+INNER JOIN Categories ON Products.CategoryID = Categories.CategoryID;
+
+-- JOIN a três tabelas
+-- A seguinte instrução SQL seleciona todos os pedidos com informações do cliente e do remetente:
+SELECT Orders.OrderID, Customers.CustomerName, Shippers.ShipperName
+FROM ((Orders
+INNER JOIN Customers ON Orders.CustomerID = Customers.CustomerID)
+INNER JOIN Shippers ON Orders.ShipperID = Shippers.ShipperID);
+-- SELECT * FROM Customers , Orders WHERE Customers.CustomerID = Orders.CustomerID;
+
+-- Exemplo de SQL LEFT JOIN
+-- A seguinte instrução SQL selecionará todos os clientes e quaisquer pedidos que eles possam ter:
+SELECT Customers.CustomerName, Orders.OrderID
+FROM Customers
+LEFT JOIN Orders ON Customers.CustomerID = Orders.CustomerID
+ORDER BY Customers.CustomerName;
+
+-- A seguinte instrução SQL retornará todos os funcionários e quaisquer pedidos que eles possam ter feito:
+SELECT Orders.OrderID, Employees.LastName, Employees.FirstName
+FROM Orders
+RIGHT JOIN Employees ON Orders.EmployeeID = Employees.EmployeeID
+ORDER BY Orders.OrderID;
+
+
+
+
+
+
+
