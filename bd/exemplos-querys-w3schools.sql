@@ -247,24 +247,22 @@ SELECT column_name(s) FROM table_name AS alias_name;
 SELECT ProductName AS "My Great Products" FROM Products;
 
 -- A seguinte instrução SQL cria um alias chamado "Endereço" que combina quatro colunas (Endereço, Código Postal, Cidade e País):
-SELECT CustomerName, CONCAT(Address,', ',PostalCode,', ',City,', ',Country) AS Address FROM Customers;
+SELECT CustomerName, CONCAT(Address,', ',PostalCode,', ',City,', ',Country) AS "Endereço" FROM Customers;
 
 /*
 Pode parecer inútil usar aliases em tabelas, mas quando você usa mais de uma tabela em suas consultas, 
 isso pode tornar as instruções SQL mais curtas.
 A seguinte declaração SQL seleciona todos os pedidos do cliente com CustomerID=4 (Around the Horn). 
 Usamos as tabelas "Customers" e "Orders" e damos a elas os aliases de tabela "c" e "o" respectivamente 
-(Aqui usamos aliases para tornar o SQL mais curto):
 */
-
+-- (Aqui usamos aliases para tornar o SQL mais curto):
 SELECT o.OrderID, o.OrderDate, c.CustomerName
 FROM Customers AS c, Orders AS o
 WHERE c.CustomerName='Around the Horn' AND c.CustomerID=o.CustomerID;
 
-
 /*
 JOIN SQL
-Uma JOIN cláusula é usada para combinar linhas de duas ou mais tabelas, 
+Uma cláusula JOIN é usada para combinar linhas de duas ou mais tabelas, 
 com base em uma coluna relacionada entre elas.
 Observe que a coluna "CustomerID" na tabela "Orders" se refere ao "CustomerID" na tabela "Customers". 
 O relacionamento entre as duas tabelas acima é a coluna "CustomerID".
@@ -277,12 +275,10 @@ FROM Orders AS o
 INNER JOIN Customers AS c ON o.CustomerID = c.CustomerID;
 
 /*
-Diferentes tipos de SQL JOINs
 Aqui estão os diferentes tipos de JOINs em SQL:
-(INNER) JOIN: Retorna registros que possuem valores correspondentes em ambas as tabelas
-(LEFT)  JOIN: Retorna todos os registros da tabela da esquerda e os registros correspondentes da tabela da direita
-(RIGHT) JOIN: Retorna todos os registros da tabela da direita e os registros correspondentes da tabela da esquerda
-(FULL)  JOIN: Retorna todos os registros quando há uma correspondência na tabela esquerda ou direita
+INNER JOIN: Retorna registros que possuem valores correspondentes em ambas as tabelas
+LEFT  JOIN: Retorna todos os registros da tabela da esquerda e os registros correspondentes da tabela da direita
+RIGHT JOIN: Retorna todos os registros da tabela da direita e os registros correspondentes da tabela da esquerda
 */
 
 -- Junte produtos e categorias com a palavra-chave INNER JOIN:
@@ -310,9 +306,120 @@ FROM Orders
 RIGHT JOIN Employees ON Orders.EmployeeID = Employees.EmployeeID
 ORDER BY Orders.OrderID;
 
+/*
+Operador SQL UNION
+O operador UNION é usado para combinar o conjunto de resultados de duas ou mais instruções de SELECT.
+Cada declaração SELECT deve ter o mesmo número de colunas
+As colunas também devem ter tipos de dados semelhantes
+As colunas em cada declaração SELECT também devem estar na mesma ordem
+*/
 
+/*
+Sintaxe UNION
 
+SELECT column_name(s) FROM table1
+UNION
+SELECT column_name(s) FROM table2;
+*/
 
+/*
+Sintaxe UNION ALL
+O operador UNION seleciona apenas valores distintos por padrão. 
+Para permitir valores duplicados, use UNION ALL:
 
+SELECT column_name(s) FROM table1
+UNION ALL
+SELECT column_name(s) FROM table2;
+*/
 
+-- A seguinte instrução SQL retorna as cidades (apenas valores distintos) das tabelas "Clientes" e "Fornecedores":
+SELECT City FROM Customers
+UNION
+SELECT City FROM Suppliers
+ORDER BY City;
+
+-- A seguinte instrução SQL retorna as cidades (valores duplicados também) das tabelas "Clientes" e "Fornecedores":
+SELECT City FROM Customers
+UNION ALL
+SELECT City FROM Suppliers
+ORDER BY City;
+
+-- A seguinte instrução SQL lista todos os clientes e fornecedores:
+SELECT 'Cliente' AS Type, ContactName, City, Country
+FROM Customers
+UNION
+SELECT 'Fornecedor', ContactName, City, Country
+FROM Suppliers;
+
+/*
+A instrução SQL GROUP BY
+A instrução GROUP BY agrupa linhas que têm os mesmos valores em linhas de resumo, 
+como "encontrar o número de clientes em cada país".
+A instrução GROUP BY é frequentemente usada com funções de agregação (COUNT(), MAX(), MIN(), SUM(), AVG()) 
+para agrupar o conjunto de resultados por uma ou mais colunas.
+*/
+-- A seguinte instrução SQL lista o número de clientes em cada país:
+SELECT COUNT(CustomerID), Country
+FROM Customers
+GROUP BY Country;
+
+-- A seguinte instrução SQL lista o número de pedidos enviados por cada remetente:
+SELECT Shippers.ShipperName, COUNT(Orders.OrderID) AS NumberOfOrders FROM Orders
+LEFT JOIN Shippers ON Orders.ShipperID = Shippers.ShipperID
+GROUP BY ShipperName;
+
+/*
+Cláusula HAVING do SQL
+A cláusula HAVING foi adicionada ao SQL porque a palavra-chave WHERE não pode ser usada com funções de agregação.
+*/
+
+-- A seguinte declaração SQL lista o número de clientes em cada país. Inclua apenas países com mais de 5 clientes:
+SELECT COUNT(CustomerID), Country
+FROM Customers
+GROUP BY Country
+HAVING COUNT(CustomerID) > 5;
+
+-- A seguinte instrução SQL lista o número de clientes em cada país, 
+-- classificados do maior para o menor (inclui apenas países com mais de 5 clientes):
+SELECT COUNT(CustomerID), Country
+FROM Customers
+GROUP BY Country
+HAVING COUNT(CustomerID) > 5
+ORDER BY COUNT(CustomerID) DESC;
+
+-- A seguinte instrução SQL lista os funcionários que registraram mais de 10 pedidos:
+SELECT Employees.LastName, COUNT(Orders.OrderID) AS NumberOfOrders
+FROM (Orders
+INNER JOIN Employees ON Orders.EmployeeID = Employees.EmployeeID)
+GROUP BY LastName
+HAVING COUNT(Orders.OrderID) > 10;
+
+-- A seguinte instrução SQL lista se os funcionários "Davolio" ou "Fuller" registraram mais de 25 pedidos:
+SELECT Employees.LastName, COUNT(Orders.OrderID) AS NumberOfOrders
+FROM Orders
+INNER JOIN Employees ON Orders.EmployeeID = Employees.EmployeeID
+WHERE LastName = 'Davolio' OR LastName = 'Fuller'
+GROUP BY LastName
+HAVING COUNT(Orders.OrderID) > 25;
+
+/*
+Operador SQL EXISTS
+O operador EXISTS é usado para testar a existência de qualquer registro em uma subconsulta.
+O operador EXISTS retorna TRUE se a subconsulta retornar um ou mais registros.
+
+Sintaxe EXISTS
+SELECT column_name(s)
+FROM table_name
+WHERE EXISTS
+(SELECT column_name FROM table_name WHERE condition);
+*/
+-- A seguinte instrução SQL retorna TRUE e lista os fornecedores com preço de produto menor que 20:
+SELECT SupplierName
+FROM Suppliers
+WHERE EXISTS (SELECT ProductName FROM Products WHERE Products.SupplierID = Suppliers.supplierID AND Price < 20);
+
+-- A seguinte instrução SQL retorna TRUE e lista os fornecedores com preço de produto igual a 22:
+SELECT SupplierName
+FROM Suppliers
+WHERE EXISTS (SELECT ProductName FROM Products WHERE Products.SupplierID = Suppliers.supplierID AND Price = 22);
 
