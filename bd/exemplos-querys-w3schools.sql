@@ -3,16 +3,17 @@
 use w3schools;
 
 /*
-A instrução SQL SELECT
-A SELECTinstrução é usada para selecionar dados de um banco de dados.
+Instrução SQL SELECT
+A instrução SELECT é usada para selecionar dados de um banco de dados.
 */
 SELECT CustomerName, City FROM Customers;
 
 /*
 A instrução SQL SELECT DISTINCT
-A SELECT DISTINCTinstrução é usada para retornar apenas valores distintos (diferentes).
+A instrução SELECT DISTINCT é usada para retornar apenas valores distintos (diferentes).
 */
 SELECT DISTINCT Country FROM Customers;
+SELECT count(*), count(distinct country) FROM Customers;
 
 /*
 A cláusula SQL WHERE
@@ -87,7 +88,7 @@ Nota: Um valor NULL é diferente de um valor zero ou de um campo que contém esp
 Um campo com um valor NULL é aquele que foi deixado em branco durante a criação do registro!
 Como testar valores NULL?
 Não é possível testar valores NULL com operadores de comparação, como =, < ou <>.
-Teremos que usar os operadores IS NULLand IS NOT NULLem vez disso.
+Teremos que usar os operadores IS NULL and IS NOT NULL em vez disso.
 */
 -- Deixar alguns registros com o endereço NULL
 UPDATE Customers SET Address = NULL WHERE CustomerID = 3 OR CustomerID = 5;
