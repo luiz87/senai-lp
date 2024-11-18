@@ -312,21 +312,16 @@ O operador UNION é usado para combinar o conjunto de resultados de duas ou mais
 Cada declaração SELECT deve ter o mesmo número de colunas
 As colunas também devem ter tipos de dados semelhantes
 As colunas em cada declaração SELECT também devem estar na mesma ordem
-*/
 
-/*
-Sintaxe UNION
-
+Sintaxe:
 SELECT column_name(s) FROM table1
 UNION
 SELECT column_name(s) FROM table2;
-*/
 
-/*
-Sintaxe UNION ALL
 O operador UNION seleciona apenas valores distintos por padrão. 
 Para permitir valores duplicados, use UNION ALL:
 
+Sintaxe:
 SELECT column_name(s) FROM table1
 UNION ALL
 SELECT column_name(s) FROM table2;
@@ -422,4 +417,37 @@ WHERE EXISTS (SELECT ProductName FROM Products WHERE Products.SupplierID = Suppl
 SELECT SupplierName
 FROM Suppliers
 WHERE EXISTS (SELECT ProductName FROM Products WHERE Products.SupplierID = Suppliers.supplierID AND Price = 22);
+
+/*
+Expressão CASE do SQL
+A expressão CASE passa por condições e retorna um valor quando a primeira condição é atendida (como uma declaração if-then-else). 
+Então, uma vez que uma condição é verdadeira, ela para de ler e retorna o resultado. 
+Se nenhuma condição for verdadeira, ela retorna o valor na cláusula ELSE.
+Se não houver nenhuma parte ELSE e nenhuma condição for verdadeira, ele retornará NULL.
+Sintaxe:
+CASE
+    WHEN condition1 THEN result1
+    WHEN condition2 THEN result2
+    WHEN conditionN THEN resultN
+    ELSE result
+END;
+*/
+
+-- O SQL a seguir analisa as condições e retorna um valor quando a primeira condição é atendida:
+SELECT OrderID, Quantity,
+CASE
+    WHEN Quantity > 30 THEN 'A quantidade é maior que 30'
+    WHEN Quantity = 30 THEN 'A quantidade é 30'
+    ELSE 'A quantidade é menor que 30'
+END AS QuantityText
+FROM OrderDetails;
+
+-- O SQL a seguir ordenará os clientes por City. No entanto, se City for NULL, então ordenará por Country:
+SELECT CustomerName, City, Country
+FROM Customers
+ORDER BY
+(CASE
+    WHEN City IS NULL THEN Country
+    ELSE City
+END);
 
