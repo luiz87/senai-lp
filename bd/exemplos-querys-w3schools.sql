@@ -126,17 +126,18 @@ Função MySQL SUBSTR()
 */
 -- Extraia uma substring de uma string (comece na posição 5, extraia 3 caracteres)
 SELECT SUBSTR("SQL Tutorial", 5, 3) AS ExtractString; -- Retorno: Tut
+-- 			   123456789012
 
 -- Extraia uma substring de uma string (comece do final, na posição -5, extraia 5 caracteres):
 SELECT SUBSTR("SQL Tutorial", -5, 5) AS ExtractString; -- Retorno: orial
-
+-- 			  -210987654321
 /*
 A cláusula SQL SELECT LIMIT 
 A cláusula SELECT LIMIT é usada para especificar o número de registros a serem retornados.
 A cláusula SELECT LIMIT é útil em tabelas grandes com milhares de registros. 
 Retornar um grande número de registros pode impactar o desempenho.
 */
-SELECT * FROM Customers LIMIT 5;
+SELECT * FROM Customers WHERE COUNTRY = 'Brazil' LIMIT 5;
 
 /*
 Funções de agregação SQL
@@ -151,7 +152,14 @@ SUM()- retorna a soma total de uma coluna numérica
 AVG()- retorna o valor médio de uma coluna numérica
 Funções de agregação ignoram valores nulos (exceto para COUNT()).
 */
-SELECT MIN(Price), MAX(Price), COUNT(*), SUM(Price), AVG(Price) FROM Products;
+SELECT 
+    MIN(Price) AS "MENOR", 
+    MAX(Price) AS "MAIOR", 
+    COUNT(*)   AS "QUANTIDADE", 
+    SUM(Price) AS "SOMA", 
+    AVG(Price) AS "MÉDIA"
+FROM
+    Products;
 
 /*
 Operador LIKE
@@ -166,7 +174,8 @@ Curinga _
 O curinga _ representa um único caractere.
 Pode ser qualquer caractere ou número, mas cada um _ representa um, e somente um, caractere.
 */
--- Retorna todos os clientes de uma cidade que começa com 'L' seguido por um caractere curinga, depois 'nd' e depois dois caracteres curinga:
+-- Retorna todos os clientes de uma cidade que começa com 'L' seguido por um caractere curinga, 
+-- depois 'nd' e depois dois caracteres curinga:
 SELECT * FROM Customers WHERE city LIKE 'L_nd__';
 
 /*
@@ -194,7 +203,8 @@ SELECT * FROM Customers WHERE Country LIKE 'Spain';
 
 /*
 Operador BETWEEN
-O operador BETWEEN seleciona valores dentro de um intervalo dado. Os valores podem ser números, texto ou datas.
+O operador BETWEEN seleciona valores dentro de um intervalo dado. 
+Os valores podem ser números, texto ou datas.
 O operador BETWEEN é inclusivo: o valor inicial e final são incluídos. 
 */
 -- Seleciona todos os produtos com preço entre 10 e 20:
@@ -441,7 +451,7 @@ CASE
     WHEN Quantity = 30 THEN 'A quantidade é 30'
     ELSE 'A quantidade é menor que 30'
 END AS QuantityText
-FROM OrderDetails;
+FROM Order_Details;
 
 -- O SQL a seguir ordenará os clientes por City. No entanto, se City for NULL, então ordenará por Country:
 SELECT CustomerName, City, Country
