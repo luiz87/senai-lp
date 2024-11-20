@@ -308,7 +308,7 @@ INNER JOIN Shippers ON Orders.ShipperID = Shippers.ShipperID);
 -- A seguinte instrução SQL selecionará todos os clientes e quaisquer pedidos que eles possam ter:
 SELECT Customers.CustomerName, Orders.OrderID
 FROM Customers
-LEFT JOIN Orders ON Customers.CustomerID = Orders.CustomerID
+LEFT JOIN Orders ON Customers.CustomerID = Orders.CustomerID 
 ORDER BY Customers.CustomerName;
 
 -- A seguinte instrução SQL retornará todos os funcionários e quaisquer pedidos que eles possam ter feito:
@@ -445,12 +445,14 @@ END;
 */
 
 -- O SQL a seguir analisa as condições e retorna um valor quando a primeira condição é atendida:
-SELECT OrderID, Quantity,
-CASE
-    WHEN Quantity > 30 THEN 'A quantidade é maior que 30'
-    WHEN Quantity = 30 THEN 'A quantidade é 30'
-    ELSE 'A quantidade é menor que 30'
-END AS QuantityText
+SELECT 
+	OrderID, 
+	Quantity,
+	CASE
+		WHEN Quantity > 30 THEN 'A quantidade é maior que 30'
+		WHEN Quantity = 30 THEN 'A quantidade é 30'
+		ELSE 'A quantidade é menor que 30'
+	END AS QuantityText
 FROM Order_Details;
 
 -- O SQL a seguir ordenará os clientes por City. No entanto, se City for NULL, então ordenará por Country:
