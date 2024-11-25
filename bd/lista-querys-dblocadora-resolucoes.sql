@@ -51,8 +51,17 @@ use locadora;
     having count(fa.ator_id) > 5
     order by 2 desc;
 
-/*18. Listar o título e a quantidade de atores para os filmes que possuem o idioma "JAPANESE" e mais de 10 atores ordenando por ordem alfabética de título e ordem crescente de quantidade de atores.*/
-
+/*18. Listar o título e a quantidade de atores para os filmes que possuem o idioma "JAPANESE" 
+e mais de 10 atores ordenando por ordem alfabética de título e ordem crescente de quantidade de atores.*/
+	
+    select titulo, count(*) from filme f 
+    inner join filme_ator fa on f.filme_id = fa.filme_id
+    inner join idioma i on f.idioma_id = i.idioma_id
+    where i.nome = 'Japanese'
+    group by titulo
+    having count(*) > 10
+    order by titulo asc , count(*) desc; 
+    
 /*19. Qual a maior duração da locação dentre os filmes?*/
 
 /*20. Quantos filmes possuem a maior duração de locação?*/
