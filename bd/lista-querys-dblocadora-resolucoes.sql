@@ -86,7 +86,22 @@ e mais de 10 atores ordenando por ordem alfabética de título e ordem crescente
     
 /*23. Qual o maior tempo de duração de filme por categoria?*/
 	
+	select c.categoria_id, c.nome, max(f.duracao_do_filme) as duracao from filme as f 
+    inner join filme_categoria as fc on f.filme_id = fc.filme_id
+    inner join categoria as c on fc.categoria_id = c.categoria_id
+    group by c.categoria_id, c.nome;
+        
 /*24. Listar a quantidade de filmes por categoria.*/
+
+	select c.nome, count(*) as qt_filme from categoria as c
+    inner join filme_categoria as fc on c.categoria_id = fc.categoria_id
+    inner join filme as f on f.filme_id = fc.filme_id
+    group by c.nome;
+    
+    select c.nome, count(*) as qt_filme
+    from categoria as c, filme_categoria as fc, filme as f
+    where c.categoria_id = fc.categoria_id and f.filme_id = fc.filme_id
+    group by c.nome; 
 
 /*25. Listar a quantidade de filmes classificados como "G" por categoria.*/
 
@@ -100,7 +115,8 @@ e mais de 10 atores ordenando por ordem alfabética de título e ordem crescente
 
 /*30. Listar os anos de lançamento que possuem mais de 400 filmes?*/
 
-/*31. Listar os anos de lançamento dos filmes que possuem mais de 100 filmes com preço da locação maior que a média do preço da locação dos filmes da categoria "Children"?*/
+/*31. Listar os anos de lançamento dos filmes que possuem mais de 100 filmes 
+com preço da locação maior que a média do preço da locação dos filmes da categoria "Children"?*/
 
 /*32. Quais as cidades e seu pais correspondente que pertencem a um país que inicie com a Letra “E”?*/
 
