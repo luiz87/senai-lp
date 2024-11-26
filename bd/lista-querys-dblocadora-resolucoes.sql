@@ -63,15 +63,29 @@ e mais de 10 atores ordenando por ordem alfabética de título e ordem crescente
     order by titulo asc , count(*) desc; 
     
 /*19. Qual a maior duração da locação dentre os filmes?*/
-
+	
+    select max(duracao_da_locacao) from filme;    
+    
 /*20. Quantos filmes possuem a maior duração de locação?*/
-
+	
+    select count(*) qt from filme 
+    where duracao_da_locacao in (select max(duracao_da_locacao) from filme);
+    
 /*21. Quantos filmes do idioma "JAPANESE" ou "GERMAN" possuem a maior duração de locação?*/
-
+	
+    select count(*) qt from filme as f 
+    inner join idioma as i on f.idioma_id = i.idioma_id 
+    where lower(nome) in ('german', 'japanese')
+    and duracao_da_locacao = (select max(duracao_da_locacao) from filme);
+    
 /*22. Qual a quantidade de filmes por classificação e preço da locação?*/
-
+	
+    select classificacao, preco_da_locacao, count(*) as qt from filme 
+    group by classificacao , preco_da_locacao
+    order by classificacao , preco_da_locacao asc;
+    
 /*23. Qual o maior tempo de duração de filme por categoria?*/
-
+	
 /*24. Listar a quantidade de filmes por categoria.*/
 
 /*25. Listar a quantidade de filmes classificados como "G" por categoria.*/
