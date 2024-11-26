@@ -2,50 +2,80 @@ SET SQL_SAFE_UPDATES=0;
 /*LISTA DE BANCO DE DADOS COM SAKILA TRADUZIDO PARA PORTUGUÊS*/
 use locadora;
 /*1. Quais os países cadastrados?*/
-	select pais from pais;
+    
+    select pais from pais;
+
 /*2. Quantos países estão cadastrados?*/
-	select count(*) from pais;
+    
+    select count(*) from pais;
+
 /*3. Quantos países que terminam com a letra "A" estão cadastrados?*/
-	select count(*) from pais where pais like '%a';
+    
+    select count(*) from pais where pais like '%a';
+
 /*4. Listar, sem repetição, os anos que houveram lançamento de filme.*/
-	select distinct ano_de_lancamento from filme;
+    
+    select distinct ano_de_lancamento from filme;
+
 /*5. Alterar o ano de lançamento igual 2007 para filmes que iniciem com a Letra "B".*/
-	update filme set ano_de_lancamento = 2007 where titulo like 'b%';
+    
+    update filme set ano_de_lancamento = 2007 where titulo like 'b%';
+
 /*6. Listar os filmes que possuem duração do filme maior que 100 e classificação igual a "G". */
-	select titulo from filme where duracao_do_filme > 100 and classificacao = 'G';
+    
+    select titulo from filme where duracao_do_filme > 100 and classificacao = 'G';
+
 /*7. Alterar o ano de lançamento igual 2008 para filmes que possuem duração da locação menor que 4 e classificação igual a "PG". */
-	update filme set ano_de_lancamento = 2008 where duracao_da_locacao < 4 and classificacao = 'PG';
+    
+    update filme set ano_de_lancamento = 2008 where duracao_da_locacao < 4 and classificacao = 'PG';
+
 /*8. Listar a quantidade de filmes que estejam classificados como "PG-13" e preço da locação maior que 2.40.*/
-	select count(*) from filme where classificacao = 'PG-13' and preco_da_locacao > 2.40;
+    
+    select count(*) from filme where classificacao = 'PG-13' and preco_da_locacao > 2.40;
+
 /*9. Quais os idiomas que possuem filmes cadastrados? */
-	select titulo, nome from filme 
+    
+    select titulo, nome from filme 
     inner join idioma on filme.idioma_id = idioma.idioma_id;
+
 /*10. Alterar o idioma para "GERMAN" dos filmes que possuem preço da locação maior que 4.*/
-	update filme set
-	idioma_id = (select idioma_id from idioma where nome = 'german')
-	where preco_da_locacao > 4;
+    
+    update filme set
+    idioma_id = (select idioma_id from idioma where nome = 'german')
+    where preco_da_locacao > 4;
+
 /*11. Alterar o idioma para "JAPANESE" dos filmes que possuem preço da locação igual 0.99.*/
-	update filme set
+    
+    update filme set
     idioma_id = (select idioma_id from idioma where nome = 'japanese')
     where preco_da_locacao = 0.99;
+
 /*12. Listar a quantidade de filmes por classificação.*/
-	select classificacao , count(*) from filme group by classificacao;
+    
+    select classificacao , count(*) from filme group by classificacao;
+
 /*13. Listar, sem repetição, os preços de locação dos filmes cadastrados.*/
-	select distinct preco_da_locacao from filme;
+    
+    select distinct preco_da_locacao from filme;
+
 /*14. Listar a quantidade de filmes por preço da locação.*/
-	select preco_da_locacao , count(*) from filme group by preco_da_locacao;
+    
+    select preco_da_locacao , count(*) from filme group by preco_da_locacao;
+
 /*15. Listar os precos da locação que possuam mais de 340 filmes.*/
-	select preco_da_locacao, count(*) from filme group by preco_da_locacao having count(*) > 340;
+    
+    select preco_da_locacao, count(*) from filme group by preco_da_locacao having count(*) > 340;
 
 /*16. Listar a quantidade de atores por filme ordenando por quantidade de atores crescente.*/
-	select titulo, count(*)  from filme_ator 
+    
+    select titulo, count(*)  from filme_ator 
     inner join filme on filme.filme_id = filme_ator.filme_id
     group by titulo
     order by 2 asc;
 
 /*17. Listar a quantidade de atores para os filmes que possuem mais de 5 atores ordenando por quantidade de atores decrescente.*/
 
-	select f.titulo, count(fa.ator_id) as quantidade_de_ator from filme_ator fa
+    select f.titulo, count(fa.ator_id) as quantidade_de_ator from filme_ator fa
     inner join filme f on fa.filme_id = f.filme_id 
     group by f.titulo
     having count(fa.ator_id) > 5
@@ -53,7 +83,7 @@ use locadora;
 
 /*18. Listar o título e a quantidade de atores para os filmes que possuem o idioma "JAPANESE" 
 e mais de 10 atores ordenando por ordem alfabética de título e ordem crescente de quantidade de atores.*/
-	
+    
     select titulo, count(*) from filme f 
     inner join filme_ator fa on f.filme_id = fa.filme_id
     inner join idioma i on f.idioma_id = i.idioma_id
@@ -63,37 +93,37 @@ e mais de 10 atores ordenando por ordem alfabética de título e ordem crescente
     order by titulo asc , count(*) desc; 
     
 /*19. Qual a maior duração da locação dentre os filmes?*/
-	
+    
     select max(duracao_da_locacao) from filme;    
     
 /*20. Quantos filmes possuem a maior duração de locação?*/
-	
+    
     select count(*) qt from filme 
     where duracao_da_locacao in (select max(duracao_da_locacao) from filme);
     
 /*21. Quantos filmes do idioma "JAPANESE" ou "GERMAN" possuem a maior duração de locação?*/
-	
+    
     select count(*) qt from filme as f 
     inner join idioma as i on f.idioma_id = i.idioma_id 
     where lower(nome) in ('german', 'japanese')
     and duracao_da_locacao = (select max(duracao_da_locacao) from filme);
     
 /*22. Qual a quantidade de filmes por classificação e preço da locação?*/
-	
+    
     select classificacao, preco_da_locacao, count(*) as qt from filme 
     group by classificacao , preco_da_locacao
     order by classificacao , preco_da_locacao asc;
     
 /*23. Qual o maior tempo de duração de filme por categoria?*/
-	
-	select c.categoria_id, c.nome, max(f.duracao_do_filme) as duracao from filme as f 
+    
+    select c.categoria_id, c.nome, max(f.duracao_do_filme) as duracao from filme as f 
     inner join filme_categoria as fc on f.filme_id = fc.filme_id
     inner join categoria as c on fc.categoria_id = c.categoria_id
     group by c.categoria_id, c.nome;
         
 /*24. Listar a quantidade de filmes por categoria.*/
 
-	select c.nome, count(*) as qt_filme from categoria as c
+    select c.nome, count(*) as qt_filme from categoria as c
     inner join filme_categoria as fc on c.categoria_id = fc.categoria_id
     inner join filme as f on f.filme_id = fc.filme_id
     group by c.nome;
