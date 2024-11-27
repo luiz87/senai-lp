@@ -135,9 +135,31 @@ e mais de 10 atores ordenando por ordem alfabética de título e ordem crescente
 
 /*25. Listar a quantidade de filmes classificados como "G" por categoria.*/
 
+    select c.nome, count(*) qt_filme from filme as f
+    inner join filme_categoria as fc on f.filme_id = fc.filme_id
+    inner join categoria as c on c.categoria_id = fc.categoria_id
+    where classificacao = 'G'
+    group by c.nome;
+
 /*26. Listar a quantidade de filmes classificados como "G" OU "PG" por categoria.*/
 
+    select 
+        c.nome , 
+        count(*) qt_filme,
+        -- incremento para detalhar as quantidades G e PG
+        count(case when classificacao = 'G' then 1 end) qt_G,
+        count(case when classificacao = 'PG' then 1 end) qt_PG
+    from filme as f
+    inner join filme_categoria as fc on fc.filme_id = f.filme_id
+    inner join categoria as c on fc.categoria_id = c.categoria_id
+    where classificacao in ('G','PG')
+    -- classificacao = 'G' or classificacao = 'PG'
+    group by c.nome
+    ;
+    
 /*27. Listar a quantidade de filmes por categoria e classificação.*/
+
+	
 
 /*28. Qual a quantidade de filmes por Ator ordenando decrescente por quantidade?*/
 
@@ -147,6 +169,17 @@ e mais de 10 atores ordenando por ordem alfabética de título e ordem crescente
 
 /*31. Listar os anos de lançamento dos filmes que possuem mais de 100 filmes 
 com preço da locação maior que a média do preço da locação dos filmes da categoria "Children"?*/
+
+    select ano_de_lancamento, count(*) qt_filme from filme 
+    where preco_da_locacao > (
+        select avg(preco_da_locacao) from filme as f 
+        inner join filme_categoria as fc on f.filme_id = fc.filme_id
+        inner join categoria as c on c.categoria_id = fc.categoria_id
+        where c.nome = 'Children'
+    )
+    group by ano_de_lancamento
+    having count(*) > 100
+    ;
 
 /*32. Quais as cidades e seu pais correspondente que pertencem a um país que inicie com a Letra “E”?*/
 
