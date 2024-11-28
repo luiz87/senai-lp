@@ -28,6 +28,7 @@ use locadora;
 /*7. Alterar o ano de lançamento igual 2008 para filmes que possuem duração da locação menor que 4 e classificação igual a "PG". */
     
     update filme set ano_de_lancamento = 2008 where duracao_da_locacao < 4 and classificacao = 'PG';
+    select * from filme where duracao_da_locacao < 4 and classificacao = 'PG';
 
 /*8. Listar a quantidade de filmes que estejam classificados como "PG-13" e preço da locação maior que 2.40.*/
     
@@ -159,13 +160,39 @@ e mais de 10 atores ordenando por ordem alfabética de título e ordem crescente
     
 /*27. Listar a quantidade de filmes por categoria e classificação.*/
 
-	
+    select c.nome, classificacao, count(*) qt_filme from filme f
+    inner join filme_categoria fc on f.filme_id = fc.filme_id
+    inner join categoria c on c.categoria_id = fc.categoria_id
+    group by c.nome, classificacao;
 
 /*28. Qual a quantidade de filmes por Ator ordenando decrescente por quantidade?*/
+   
+    select 
+        primeiro_nome, 
+        ultimo_nome,
+        count(*) qt_filme
+    from ator as a 
+    inner join filme_ator as fa on a.ator_id = fa.ator_id
+    group by primeiro_nome, ultimo_nome
+    order by count(*) desc;    
 
-/*29. Qual a quantidade de filmes por ano de lançamento ordenando por quantidade crescente?*/
+/*29. Qual a quantidade de filmes, por ano de lançamento, ordenando por quantidade crescente?*/
+
+    select 
+        ano_de_lancamento,
+        count(*) quantidade
+    from filme
+    group by ano_de_lancamento
+    order by quantidade asc;
 
 /*30. Listar os anos de lançamento que possuem mais de 400 filmes?*/
+
+    select 
+        ano_de_lancamento,
+        count(*) quantidade
+    from filme
+    group by ano_de_lancamento
+    having quantidade > 400;
 
 /*31. Listar os anos de lançamento dos filmes que possuem mais de 100 filmes 
 com preço da locação maior que a média do preço da locação dos filmes da categoria "Children"?*/
@@ -181,11 +208,30 @@ com preço da locação maior que a média do preço da locação dos filmes da 
     having count(*) > 100
     ;
 
-/*32. Quais as cidades e seu pais correspondente que pertencem a um país que inicie com a Letra “E”?*/
+/*32. Quais as cidades e seu pais correspondente que pertencem a um país 
+que inicie com a Letra “E”?*/
+
+    select cidade, pais from cidade as c 
+    inner join pais as p on c.pais_id = p.pais_id
+    where pais like 'e%';        
 
 /*33. Qual a quantidade de cidades por pais em ordem decrescente?*/
 
+    select pais, count(*) quantidade from pais as p 
+    inner join cidade as c on p.pais_id = c.pais_id
+    group by pais
+    order by quantidade desc;
+
 /*34. Qual a quantidade de cidades que iniciam com a Letra “A” por pais em ordem crescente?*/
+    
+    select * from pais;
+    select * from cidade;
+    
+    select pais, count(*) quantidade from pais as p 
+    inner join cidade as c on p.pais_id = c.pais_id
+    where cidade like 'a%'
+    group by pais
+    order by quantidade asc;
 
 /*35. Quais os países que possuem mais de 3 cidades que iniciam com a Letra “A”?*/
 
