@@ -383,12 +383,60 @@ que iniciam com a Letra “A” ou tenha "R" ordenando por quantidade crescente?
 
 /*49. Quais Filmes possuem preço da Locação maior que a média de preço da locação?*/
 
+	select * from filme 
+    where preco_da_locacao > (select avg(preco_da_locacao) from filme);
+
 /*50. Qual a soma da duração dos Filmes por categoria?*/
 
+	select c.nome, sum(duracao_do_filme) soma_duracao from filme as f
+    inner join filme_categoria as fc on f.filme_id = fc.filme_id
+    inner join categoria as c on c.categoria_id = fc.categoria_id
+    group by c.nome;
+
 /*51. Qual a quantidade de filmes locados mês a mês por ano? */
+-- set lc_time_names=pt_BR; select monthname(curdate());
+-- select monthname(data_de_aluguel) from aluguel;
+	select 
+		substring(data_de_aluguel,1,4) ano,
+        substring(data_de_aluguel,6,2) mes,
+        count(*) quantidade
+	from aluguel
+    group by ano, mes;
+    select * from aluguel;
 
-/*52. Qual o total pago por classificação de filmes alugados no ano de 2005?*/
-
+/*52. Qual o total pago por classificação de filmes alugados no ano de 2006?*/
+	
+    select classificacao, sum(valor) total_pago, count(*) qt from filme as f 
+    inner join inventario as i on f.filme_id = i.filme_id
+    inner join aluguel as a on i.inventario_id = a.inventario_id
+    inner join pagamento as p on p.aluguel_id = a.aluguel_id
+    where -- data_de_aluguel like '2006%'
+    date_format(data_de_aluguel,'%Y') = '2006'
+    group by classificacao
+    order by classificacao;
+    
 /*53. Qual a média mensal do valor pago por filmes alugados no ano de 2005?*/
 
-/*54. Qual o total pago por filme alugado no mês de Junho de 2005 por cliente? -----    CORRIGIR  */
+	select  
+		date_format(data_de_aluguel,'%Y') ano,
+		date_format(data_de_aluguel,'%m') mes,
+        avg(valor) media_pagamento
+    from aluguel as a 
+    inner join pagamento as p on a.aluguel_id = p.aluguel_id
+    where date_format(data_de_aluguel,'%Y') = '2005'
+    group by ano, mes;
+
+/*54. Qual o total pago por filme alugado no mês de Junho de 2005 por cliente? */
+   
+    select 
+		f.titulo titulo, 
+		concat_ws(' ',c.primeiro_nome, c.ultimo_nome) nome_completo,
+        sum(valor) total_pago
+	from cliente as c 
+    inner join pagamento as p on c.cliente_id = p.cliente_id
+    inner join aluguel as a on a.aluguel_id = p.aluguel_id
+    inner join inventario as i on a.inventario_id = i.inventario_id
+    inner join filme as f on i.filme_id = f.filme_id
+    where data_de_aluguel like '2005-06%'
+    group by titulo, nome_completo
+    order by 1 , 2;
