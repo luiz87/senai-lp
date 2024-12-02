@@ -2,27 +2,62 @@
 
 -- 1. String Functions
 -- ASCII(): Retorna o código ASCII do primeiro caractere.
+SELECT ASCII('2');
+SELECT ASCII(2);
+SELECT ASCII('dx');
+
 -- BIN(): Converte um número decimal para binário.
+SELECT BIN(11);
+
 -- CHAR_LENGTH() / LENGTH(): Retorna o tamanho de uma string (em caracteres ou bytes).
+SELECT CHAR_LENGTH('senai'), LENGTH('SENAI');
+
 -- CONCAT(): Concatena strings.
+SELECT CONCAT('senai','@','123');
+
 -- CONCAT_WS(): Concatena strings com separador.
+SELECT CONCAT_WS(' ','senai','@','123');
+
 -- ELT(): Retorna a string em uma posição da lista.
+SELECT ELT(4,'A','B','C','D');
+
 -- FIELD(): Retorna a posição de uma string na lista fornecida.
+SELECT FIELD('A','A','B','C','D');
+
 -- FIND_IN_SET(): Retorna a posição de uma string dentro de uma lista separada por vírgulas.
+SELECT FIND_IN_SET('A','A,B,C,D');
+
 -- FORMAT(): Formata um número.
+SELECT FORMAT(12332.123456, 3);
+SELECT FORMAT(12332.1,4);
+SELECT FORMAT(12332.2,0);
+SELECT FORMAT(12332.2,2,'de_DE');
+
 -- INSTR(): Retorna a posição da primeira ocorrência de uma substring.
+SELECT INSTR('senai','na');
+
 -- LEFT() / RIGHT(): Retorna os primeiros ou últimos caracteres de uma string.
+SELECT LEFT('SENAI', 2), RIGHT('SENAI',2);
+
 -- LOCATE(): Similar ao INSTR(), mas permite especificar uma posição inicial.
+SELECT INSTR('SENAI SENAI','A'), LOCATE('A','SENAI SENAI',INSTR('SENAI SENAI','A')+1);
+
 -- LOWER() / UPPER(): Converte strings para minúsculas ou maiúsculas.
+SELECT LOWER('seNai') , UPPER('SeNai');
+
 -- LPAD() / RPAD(): Preenche uma string no início ou no fim.
+SELECT LPAD('Hi',10,'0'), RPAD('Hi',10,'0');
+
 -- LTRIM() / RTRIM(): Remove espaços à esquerda ou direita.
+-- TRIM(): Remove caracteres das extremidades.
+SELECT LTRIM('   NOME   '), RTRIM('   NOME   '), TRIM('   NOME   ');
+
 -- MID() / SUBSTRING(): Extrai parte de uma string.
 -- REPLACE(): Substitui parte de uma string.
 -- REVERSE(): Inverte a string.
 -- SOUNDEX(): Retorna um código fonético de uma string.
 -- SPACE(): Retorna uma string de espaços.
 -- STRCMP(): Compara strings.
--- TRIM(): Remove caracteres das extremidades.
 
 -- 2. Numeric Functions
 -- ABS(): Retorna o valor absoluto.
