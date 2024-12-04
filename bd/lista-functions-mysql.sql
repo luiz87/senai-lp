@@ -233,6 +233,7 @@ SELECT UUID();
 -- 7. Aggregate Functions
 -- AVG(): Calcula a média.
 SELECT AVG(VALOR) FROM PAGAMENTO;
+
 -- COUNT(): Conta os registros.
 SELECT COUNT(*) FROM PAGAMENTO;
 
