@@ -10,6 +10,8 @@
 -- e ordene pela quantidade do maior para o menor
 
 -- 04. Elabore um relatório por idade e quantidade de jogadores
+-- remover data numa e posições "Auxiliar técnico" e "Técnico"
+-- ordene pela idade do mais velho ao mais novo
 
 -- 05. Elabore um relatório por jogador e quantidade de cartões, 
 -- detalhar também a quantidade de Cartões Vermelho e Amarelo
