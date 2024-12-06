@@ -74,6 +74,9 @@ def get_jogos():
             visitante = times[lsItem[i]['equipes']['visitante']['sigla']]
             estadio = estadios[lsItem[i]['equipes']['mandante']['sigla']]
             out += f",({r},'{dataJogo}',{gol_mandante},{gol_visitante},{mandante},{visitante},{estadio})"
+            # id_partida = f"(SELECT id_partida FROM partida WHERE id_mandante = {mandante} AND id_visitante = {visitante})"
+            # id_partida = get_id(id_partida) 
+            # out += f"UPDATE parida SET gol_mandante = {gol_mandante}, gol_visitante = {gol_visitante} WHERE id_partida = {id_partida};"
             i += 1
             out = out.replace("None", "null")
         r += 1
