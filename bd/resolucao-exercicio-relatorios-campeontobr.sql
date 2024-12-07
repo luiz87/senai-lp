@@ -61,3 +61,18 @@ inner join evento as e on j.id_jogador = e.id_jogador
 where descricao like 'Cartão%' -- and id_partida like '338'
 group by numero, nome
 order by qt_total desc;
+
+set lc_time_names=pt_BR; -- modificar o idioma pra pt_BR
+select DAYNAME(horario) dia, count(*) quantidade from partida where gol_mandante is not null group by DAYNAME(horario);
+
+select descricao, count(*) total, sum(if(minuto <= 45,1,0)) ate_45, sum(if(minuto > 45,1,0)) depois_45 from evento group by descricao;
+
+select 
+	sigla , 
+	sum(if(descricao = 'Bola na Trave',1,0)) "Bola na Trave", 
+    sum(if(descricao = 'Pênalti Perdido',1,0)) "Pênalti Perdido", 
+    sum(if(descricao = 'Gol anulado (Var)',1,0))  "Gol anulado (Var)"
+from time as t 
+inner join jogador as j on t.id_time = j.id_time 
+inner join evento as e on j.id_jogador = e.id_jogador
+group by sigla;
