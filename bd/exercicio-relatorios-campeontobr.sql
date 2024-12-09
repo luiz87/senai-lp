@@ -8,10 +8,28 @@
 
 -- 03. Elabore um relatório por minuto e a quantidade de gols (não contar "Gol anulado (Var)")
 -- e ordene pela quantidade do maior para o menor
+/*exemplo:
+minuto 	qt_gols
+90		75
+45		48
+52		14
+61		14
+.
+.
+*/
 
 -- 04. Elabore um relatório por idade e quantidade de jogadores
 -- remover data nula e posições "Auxiliar técnico" e "Técnico"
 -- ordene pela idade do mais velho ao mais novo
+/*exemplo:
+idade 	quantidade
+44		1
+43		1
+41		1
+40		1
+39		3
+38		4
+*/
 
 -- 05. Elabore um relatório por jogador e quantidade de cartões, 
 -- detalhar também a quantidade de Cartões Vermelho e Amarelo
@@ -25,6 +43,7 @@ numero 	nome 			qt_amarelo 	qt_vermelho qt_total
 .
 .
 */
+
 -- 06. Deseja-se saber qual a quantidade de jogos que aconteceram por dia
 /* exemplo:
 dia		quantidade
