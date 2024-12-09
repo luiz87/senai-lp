@@ -1,10 +1,11 @@
 use campeonatobrasileiro;
+-- 01
 SET SQL_SAFE_UPDATES=0;
 update evento set descricao = 'Substituição' where descricao = 'Substitution';
 update evento set descricao = 'Bola na Trave' where descricao = 'Woodwork';
 update evento set descricao = 'Cartão Vermelho (Segundo Cartão Amarelo)' 
 where descricao = 'Cartão Vermelho (Second Yellow Card)';
-
+-- 02
 UPDATE partida SET gol_mandante = 1, gol_visitante = 1 WHERE id_partida = 341;
 UPDATE partida SET gol_mandante = 0, gol_visitante = 1 WHERE id_partida = 342;
 UPDATE partida SET gol_mandante = 1, gol_visitante = 1 WHERE id_partida = 343;
@@ -33,7 +34,7 @@ UPDATE partida SET gol_mandante = 0, gol_visitante = 3 WHERE id_partida = 370;
 UPDATE partida SET gol_mandante = 0, gol_visitante = 1 WHERE id_partida = 361;
 UPDATE partida SET gol_mandante = 1, gol_visitante = 2 WHERE id_partida = 362;
 UPDATE partida SET gol_mandante = 3, gol_visitante = 1 WHERE id_partida = 369;
-
+-- 03
 select 
 	minuto , 
     count(*) qt_gols 
@@ -41,7 +42,7 @@ from evento
 where descricao like 'Gol%' and descricao not like '%VAR%' 
 group by minuto 
 order by qt_gols desc;
-
+-- 04
 select 
 	2024 - year(dt_nascimento) idade, 
     count(*) quantidade
@@ -49,7 +50,7 @@ from jogador
 where dt_nascimento is not null and posicao not in ('Auxiliar técnico','Técnico')
 group by idade
 order by idade desc;
-
+-- 05
 select 
 	numero,
     nome ,
@@ -62,12 +63,12 @@ inner join evento as e on j.id_jogador = e.id_jogador
 where descricao like 'Cartão%' -- and id_partida like '338'
 group by numero, nome
 order by qt_total desc;
-
+-- 06
 set lc_time_names=pt_BR; -- modificar o idioma pra pt_BR
 select DAYNAME(horario) dia, count(*) quantidade from partida where gol_mandante is not null group by DAYNAME(horario);
-
+-- 07
 select descricao, count(*) total, sum(if(minuto <= 45,1,0)) ate_45, sum(if(minuto > 45,1,0)) depois_45 from evento group by descricao;
-
+-- 08
 select 
 	sigla , 
 	sum(if(descricao = 'Bola na Trave',1,0)) "Bola na Trave", 
@@ -77,7 +78,7 @@ from time as t
 inner join jogador as j on t.id_time = j.id_time 
 inner join evento as e on j.id_jogador = e.id_jogador
 group by sigla;
-
+-- 09
 select 
 	concat('Entre ',faixa_etaria,'0 e',faixa_etaria,'9') faixa_etaria,
     count(*) quantidade
@@ -89,7 +90,7 @@ from (
 )A
 group by faixa_etaria
 ;
-
+-- 10
 select 
 	nome nome_estadio, 
     sum(gol_mandante + gol_visitante) quantidade
