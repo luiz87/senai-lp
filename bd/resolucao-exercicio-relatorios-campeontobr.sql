@@ -1,3 +1,4 @@
+use campeonatobrasileiro;
 SET SQL_SAFE_UPDATES=0;
 update evento set descricao = 'Substituição' where descricao = 'Substitution';
 update evento set descricao = 'Bola na Trave' where descricao = 'Woodwork';
@@ -76,3 +77,24 @@ from time as t
 inner join jogador as j on t.id_time = j.id_time 
 inner join evento as e on j.id_jogador = e.id_jogador
 group by sigla;
+
+select 
+	concat('Entre ',faixa_etaria,'0 e',faixa_etaria,'9') faixa_etaria,
+    count(*) quantidade
+from (
+	select 
+		truncate((2024 - year(dt_nascimento))/10,0) faixa_etaria
+	from jogador
+	where dt_nascimento is not null and posicao not in ('Auxiliar técnico','Técnico')
+)A
+group by faixa_etaria
+;
+
+select 
+	nome nome_estadio, 
+    sum(gol_mandante + gol_visitante) quantidade
+from estadio as e
+inner join partida as p on e.id_estadio = p.id_estadio
+where gol_mandante is not null
+group by nome 
+order by quantidade desc;
