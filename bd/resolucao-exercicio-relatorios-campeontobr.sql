@@ -80,7 +80,7 @@ inner join evento as e on j.id_jogador = e.id_jogador
 group by sigla;
 -- 09
 select 
-	concat('Entre ',faixa_etaria,'0 e',faixa_etaria,'9') faixa_etaria,
+	concat('Entre ',faixa_etaria,'0 e ',faixa_etaria,'9') faixa_etaria,
     count(*) quantidade
 from (
 	select 

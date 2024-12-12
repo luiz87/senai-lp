@@ -88,10 +88,10 @@ BOT		10				2				1
 -- 09. Deseja-se saber a quantidade de jogador por faixa etária
 /*exemplo:
 faixa_etaria	qt
-Entre 30 e39	191
-Entre 20 e29	405
-Entre 10 e19	30
-Entre 40 e49	4
+Entre 30 e 39	191
+Entre 20 e 29	405
+Entre 10 e 19	30
+Entre 40 e 49	4
 */
 
 -- 10. Deseja-se saber o total de gols em cada estádio

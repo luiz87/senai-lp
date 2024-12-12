@@ -25,7 +25,11 @@ RETURNS: Define o tipo de dado que a função retornará (ex.: INT, VARCHAR, etc
 DETERMINISTIC / NOT DETERMINISTIC:
 DETERMINISTIC: Indica que a função sempre retorna o mesmo valor para os mesmos parâmetros.
 NOT DETERMINISTIC: Indica que o resultado pode variar (ex.: se usar funções como RAND() ou NOW()).
+READS SQL DATA: Indicar que a função lê dados (mesmo que apenas CURDATE()), sem modificá-los. Isso ajuda a cumprir os requisitos do MySQL para replicação.
 Corpo da função: Contém as instruções SQL e a lógica para calcular o valor retornado.
+Para apagar uma function
+
+DROP FUNCTION nome_da_funcao;
 
 Exemplo Prático:
 Aqui está um exemplo de uma função simples que retorna o quadrado de um número:
@@ -71,3 +75,5 @@ Observações Importantes:
 Permissões: Você precisa de permissões administrativas (CREATE ROUTINE) para criar funções.
 Funções não podem modificar dados: Diferentemente de procedimentos armazenados,ou seja funções não podem usar comandos como INSERT, UPDATE ou DELETE.
 Uso com Cuidado: Funções devem ser usadas em consultas com cuidado, pois podem impactar a performance dependendo da lógica.
+
+
