@@ -1,3 +1,5 @@
+## Sintaxe Triggers
+
 No MySQL, triggers são gatilhos que executam automaticamente uma ação em resposta a eventos específicos 
 (como INSERT, UPDATE, ou DELETE) em uma tabela. 
 Elas são úteis para validar dados, registrar auditorias ou implementar regras de negócios diretamente no banco de dados.
