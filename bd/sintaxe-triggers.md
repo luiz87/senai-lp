@@ -15,7 +15,7 @@ FOR EACH ROW
 BEGIN
     -- Corpo da trigger
     -- Lógica SQL que será executada
-END;
+END$$
 
 DELIMITER ;
 ```
@@ -44,7 +44,7 @@ BEGIN
     IF NEW.nome IS NULL OR NEW.nome = '' THEN
         SET NEW.nome = 'Nome Padrão';
     END IF;
-END;
+END$$
 
 DELIMITER ;
 ```
@@ -63,7 +63,7 @@ FOR EACH ROW
 BEGIN
     INSERT INTO auditoria_usuarios (id_usuario, nome_antigo, nome_novo, data_alteracao)
     VALUES (OLD.id, OLD.nome, NEW.nome, NOW());
-END;
+END$$
 
 DELIMITER ;
 ```
@@ -85,7 +85,7 @@ BEGIN
         SIGNAL SQLSTATE '45000'
         SET MESSAGE_TEXT = 'Não é permitido excluir o usuário administrador';
     END IF;
-END;
+END$$
 
 DELIMITER ;
 ```
