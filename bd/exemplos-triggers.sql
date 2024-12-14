@@ -38,12 +38,11 @@ CREATE TABLE auditoria_usuarios  (
  
  DELIMITER ;
  
- select * from usuarios;
- UPDATE usuarios SET nome = 'Bill Gates' , email = 'bill@microsoft.com' WHERE id = 4;
- UPDATE usuarios SET nome = 'Chapollin Colorado' , email = 'chapollin@microsoft.com' WHERE id = 5;
- select * from usuarios;
- select * from auditoria_usuarios;
- 
+select * from usuarios;
+UPDATE usuarios SET nome = 'Bill Gates' , email = 'bill@microsoft.com' WHERE id = 4;
+UPDATE usuarios SET nome = 'Chapollin Colorado' , email = 'chapollin@microsoft.com' WHERE id = 5;
+select * from usuarios;
+select * from auditoria_usuarios;
  
 DELIMITER $$
 
@@ -60,3 +59,33 @@ END$$
 DELIMITER ;
  
 DELETE FROM usuarios WHERE id = 1;
+
+DELIMITER $$
+
+-- CRIE UM TRIGGER PARA GRAVAR NA TABELA DE AUDITORIA AS INFORMAÇÕES DA TABELA USUARIOS DEPOIS DE UM DELETE
+-- CRIE UM TRIGGER PARA GRAVAR NA TABELA DE AUDITORIA AS INFORMAÇÕES DA TABELA USUARIOS DEPOIS DE UM INSERT
+
+CREATE TRIGGER depois_de_inserir_usuario
+AFTER INSERT ON usuarios
+FOR EACH ROW
+BEGIN
+    INSERT INTO auditoria_usuarios VALUES (null, NEW.id, NEW.nome, NEW.email, 'insert', NOW());
+END$$
+
+DELIMITER ;
+
+DELIMITER $$
+
+CREATE TRIGGER depois_de_excluir_usuario
+AFTER DELETE ON usuarios
+FOR EACH ROW
+BEGIN
+    INSERT INTO auditoria_usuarios VALUES (null, OLD.id, OLD.nome, OLD.email, 'delete', NOW());
+END$$
+
+DELIMITER ;
+
+DELETE FROM usuarios WHERE id = 2;
+CALL adicionar_usuario('','teste@trigger.com');
+select * from usuarios;
+select * from auditoria_usuarios;
