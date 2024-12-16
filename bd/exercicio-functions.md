@@ -53,3 +53,18 @@ Requisitos:
 > - Capricórnio: 22/12 a 19/01
 > - Aquário: 20/01 a 18/02
 > - Peixes: 19/02 a 20/03
+
+```sql
+select signo('2024-04-01');
+select signo('2024-05-01');
+select signo('2024-06-01');
+select signo('2024-07-01');
+select signo('2024-08-01');
+select signo('2024-09-01');
+select signo('2024-10-01');
+select signo('2024-11-01');
+select signo('2024-12-01');
+select signo('2024-01-01');
+select signo('2024-02-01');
+select signo('2024-03-01');
+```
