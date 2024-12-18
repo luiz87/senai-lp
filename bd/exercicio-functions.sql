@@ -1,3 +1,4 @@
+use campeonatobrasileiro;
 -- 01. function valor_aleatorio
 DELIMITER $$
 CREATE FUNCTION valor_aleatorio(min INT, max INT)
