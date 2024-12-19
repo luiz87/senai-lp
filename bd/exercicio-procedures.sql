@@ -28,48 +28,54 @@ select * from classificacao;
 
 -- 02.
 DELIMITER $$
-CREATE PROCEDURE classificacao_rodada(num_rodada INT)
+CREATE PROCEDURE classificacao_rodada(nuRodada INT)
 BEGIN
-    select row_number() over() C, tb.* from (
-    select 		
-        sigla, 
-		nome, 
-		sum(pontos) pontos,
-		count(*) J,
-		sum(if(pontos = 3 , 1, 0)) V,    
-		sum(gols) - sum(gols_sofridos) SG,
-		concat(sum(gols),':',sum(gols_sofridos)) Gol,
-		sum(if(pontos = 1 , 1, 0)) E,
-		sum(if(pontos = 0 , 1, 0)) D
-	from (
-		select 
-			rodada, 
-			sigla, 
-			nome, 
-			gols, 
-			gols_sofridos,
-			if(gols > gols_sofridos , 3 , if(gols = gols_sofridos, 1, 0)) pontos
-		from (
-			select 
-				rodada,
-				id_mandante id_time, 
-				gol_mandante gols, 
-				gol_visitante  gols_sofridos
-			from partida
-			union all
-			select 
-				rodada,
-				id_visitante,     
-				gol_visitante,
-				gol_mandante
-			from partida) as tb
-		inner join time as t on t.id_time = tb.id_time) tb
-	where rodada <= num_rodada
-	group by 
-		sigla,
-		nome
-	order by pontos desc, V desc, SG desc) tb;
+with partidas as (
+select 
+	rodada,
+    id_mandante as id_time,
+    gol_mandante as gol_feito,
+    gol_visitante as gol_sofrido
+from partida
+union all 
+select 
+	rodada,
+    id_visitante,
+    gol_visitante,
+    gol_mandante
+from partida),
+resultados as (
+select 
+	rodada,
+    sigla,
+    nome,
+    gol_feito,
+    gol_sofrido,
+    gol_feito - gol_sofrido saldo_gols,
+    if(gol_feito > gol_sofrido,3,if(gol_feito = gol_sofrido,1,0)) pontos,
+    if(gol_feito > gol_sofrido,1,0) V,
+    if(gol_feito = gol_sofrido,1,0) E,
+    if(gol_feito < gol_sofrido,1,0) D
+from partidas as p
+inner join time as t on t.id_time = p.id_time)
+select row_number() over() C, tb.* from (
+select 	
+    sigla, 
+    nome, 
+    sum(gol_feito) gol_feito, 
+    sum(gol_sofrido) gol_sofrido, 
+    sum(saldo_gols) saldo_gols,
+    sum(pontos) pontos,
+    sum(V) V, 
+    sum(E) E, 
+    sum(D) D,
+    count(*) qt_rodadas
+from resultados where rodada <= nuRodada and gol_feito is not null
+group by 
+	sigla,
+    nome
+order by pontos desc, V desc, saldo_gols desc, gol_feito desc) as tb;
 END$$
 DELIMITER ;
-
-call classificacao_rodada(19);
+-- drop procedure classificacao_rodada;
+call classificacao_rodada(1);
