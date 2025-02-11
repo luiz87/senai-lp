@@ -23,9 +23,8 @@ O sistema deve armazenar as seguintes informações:
 - Cada pedido está associado a uma comanda e possui uma data e hora  
 - Um pedido pode conter um ou mais pratos, com a respectiva quantidade  
   
-**Objetivo**  
+**Avaliação**  
 Você deve criar um banco de dados relacional para armazenar essas informações e desenvolver os comandos SQL necessários para:  
-  
 - [ ] Criar o modelo conceitual (DER-Conceitual).  
 - [ ] Criar o modelo lógico (DER-Lógico).  
 - [ ] Criar o banco e as tabelas seguindo a modelagem proposta (DDL).  
