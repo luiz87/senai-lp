@@ -36,8 +36,6 @@ Você deve criar um banco de dados relacional para armazenar essas informações
 	- Obter o histórico de pedidos realizados.  
 	- Verificar quais pratos foram pedidos em uma determinada comanda.  
 	- Calcular o total gasto por cada comanda.  
-  
-**Desafios Extras**  
-- Implemente uma consulta SQL para identificar qual prato foi o mais pedido e quantas vezes ele foi solicitado.  
-- Criar um procedure que atualize a quantidade de um item do cardápio.  
-- Criar um trigger que subtraia a quantidade de um tem do cardápio quando for solicitado em um pedido.  
+	- Implemente uma consulta SQL para identificar qual prato foi o mais pedido e quantas vezes ele foi solicitado.  
+- [ ] Criar um procedure que atualize a quantidade em estoque de um item do cardápio.  
+- [ ] Criar um trigger que subtraia a quantidade em estoque de um tem do cardápio quando for solicitado em um pedido.
