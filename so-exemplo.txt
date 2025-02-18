@@ -1,0 +1,3 @@
+links:
+Avaliação de Reação para a turma QUA.070.108 Administrador De Banco De Dados
+https://portaleducacao.sistemafibra.org.br/FrameHTML/web/app/edu/PortalEducacional/login/
