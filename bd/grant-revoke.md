@@ -138,9 +138,10 @@ COMMIT; -- Confirma a transação
 ---
 
 ## **10. Exercícios Práticos**  
-1️⃣ Crie um usuário chamado **luiz-maia** e conceda a ele permissões apenas de insert, update e select no banco **pizzaria**.  
-2️⃣ Informe o ip do seu computador para o instrutor  
-3️⃣ Monitore as operações realizadas na tabela de auditoria **au_pizza**  
+1️⃣ Crie um usuário chamado **luiz-maia** e conceda a ele permissões apenas de insert, update e select no banco **pizzaria** senha **senai@123**.  
+2️⃣ Informe o ip do seu computador para o instrutor.  
+3️⃣ Monitore as operações realizadas na tabela de auditoria **au_pizza**.  
+4️⃣ Construa uma trigger para identificar os updates na tabela pizza e grave as antigas informações na tabela au_pizza.  
 
 ---
 
