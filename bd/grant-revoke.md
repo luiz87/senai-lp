@@ -138,9 +138,9 @@ COMMIT; -- Confirma a transação
 ---
 
 ## **10. Exercícios Práticos**  
-1️⃣ Crie um usuário chamado **maria** e conceda a ele permissões apenas de leitura no banco **loja**.  
-2️⃣ Simule uma transação com **INSERT** e **UPDATE**, finalize com **COMMIT**.  
-3️⃣ Simule uma transação onde um **DELETE** é desfeito usando **ROLLBACK**.  
+1️⃣ Crie um usuário chamado **luiz-maia** e conceda a ele permissões apenas de insert, update e select no banco **pizzaria**.  
+2️⃣ Informe o ip do seu computador para o instrutor  
+3️⃣ Monitore as operações realizadas na tabela de auditoria **au_pizza**  
 
 ---
 
