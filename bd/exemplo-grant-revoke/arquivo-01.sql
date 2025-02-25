@@ -19,18 +19,6 @@ SHOW GRANTS FOR 'novo-usuario'@'localhost';
 -- GRANT USAGE ON *.* TO `novo-usuario`@`localhost`;
 -- GRANT SELECT, INSERT, UPDATE, DELETE, DROP, REFERENCES, INDEX, ALTER, CREATE TEMPORARY TABLES, LOCK TABLES, EXECUTE, CREATE VIEW, SHOW VIEW, CREATE ROUTINE, ALTER ROUTINE, EVENT, TRIGGER ON `pizzaria`.* TO `novo-usuario`@`localhost`;
 
-GRANT INSERT, SELECT, UPDATE ON pizzaria.pizza TO 'anderson'@'%';
-GRANT INSERT, SELECT, UPDATE ON pizzaria.pizza TO 'fabricio'@'%';
-GRANT INSERT, SELECT, UPDATE ON pizzaria.pizza TO 'felipe'@'%';
-GRANT INSERT, SELECT, UPDATE ON pizzaria.pizza TO 'gabriel'@'%';
-GRANT INSERT, SELECT, UPDATE ON pizzaria.pizza TO 'iara'@'%';
-GRANT INSERT, SELECT, UPDATE ON pizzaria.pizza TO 'italo'@'%';
-GRANT INSERT, SELECT, UPDATE ON pizzaria.pizza TO 'lucas'@'%';
-GRANT INSERT, SELECT, UPDATE ON pizzaria.pizza TO 'luiz'@'%';
-GRANT INSERT, SELECT, UPDATE ON pizzaria.pizza TO 'marcos'@'%';
-GRANT INSERT, SELECT, UPDATE ON pizzaria.pizza TO 'thiago'@'%';
-
-
 CREATE TABLE au_pizza(
 id_aupizza int auto_increment primary key,
 id_pizza int,
@@ -51,5 +39,26 @@ END$$
 
 DELIMITER ;
 
+DELIMITER $$
+CREATE TRIGGER depois_update_pizza
+AFTER UPDATE ON pizza
+FOR EACH ROW
+BEGIN
+	INSERT INTO au_pizza(id_pizza, sabor, ingredientes, usuario, data_hora, operacao)
+    VALUES (OLD.id_pizza, OLD.sabor, OLD.ingredientes, user(), now(), 'update');
+END$$
 
-SELECT * FROM au_pizza;
+DELIMITER ;
+
+DELIMITER $$
+CREATE TRIGGER depois_delete_pizza
+AFTER DELETE ON pizza
+FOR EACH ROW
+BEGIN
+	INSERT INTO au_pizza(id_pizza, sabor, ingredientes, usuario, data_hora, operacao)
+    VALUES (OLD.id_pizza, OLD.sabor, OLD.ingredientes, user(), now(), 'delete');
+END$$
+
+DELIMITER ;
+
+GRANT select ON pizzaria.au_pizza TO 'luiz-maia'@'%';
