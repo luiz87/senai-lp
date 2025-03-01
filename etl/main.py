@@ -34,8 +34,11 @@ i = 0
 while i < len(lista):
     titulo = lista[i]['title']
     descricao = lista[i]['description']
+    preco = lista[i]['price']
     # print(f"{titulo} - {descricao}")
-    sql = f"INSERT INTO pizza(sabor, ingredientes) VALUES('{titulo}','{descricao}');"
+    # sql = f"INSERT INTO pizza(sabor, ingredientes) VALUES('{titulo}','{descricao}');"
+    sql = f"UPDATE pizza SET preco = {preco} WHERE sabor = '{titulo}';"
+    # print(sql)
     banco(sql)
     i = i + 1
 
@@ -43,3 +46,6 @@ while i < len(lista):
 # pip install requests
 # pip install mysql-connector-python
 # python main.py
+
+
+# alter table pizza add column preco decimal(5,2);
